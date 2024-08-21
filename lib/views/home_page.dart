@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'credits.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
@@ -68,7 +70,8 @@ class _HomePageState extends State<HomePage> {
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [Credits.contents()]
+          /*children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
             ),
@@ -76,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-          ],
+          ],*/
         ),
       ),
       floatingActionButton: FloatingActionButton(
