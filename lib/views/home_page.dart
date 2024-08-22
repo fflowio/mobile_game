@@ -26,6 +26,11 @@ class _HomePageState extends State<HomePage> {
   int _coins = 45;
   String _showContents = "default";
 
+  changeContents(String newContents) {
+    debugPrint("Setting state to $newContents");
+    setState(() => _showContents = newContents);
+  }
+
   spendCoins() {
     if (_coins >= 10) {
       _coins -= 10;
@@ -36,23 +41,25 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  start() {
-    debugPrint("TODO Start stuff");
-    _coins = 45;
-    setState(() { _coins; });
-  }
-
   Column contentFinder() {
-    if (_showContents == "three") {
-      return threeCards();
-    }
+    debugPrint(_showContents);
 
-    return defaultContents();
+    if (_showContents == "three") {
+      debugPrint("Three cards");
+      return threeCards();
+    } else {
+      debugPrint("Default");
+      return defaultContents();
+    }
 
   }
 
   Column threeCards() {
-    return Column();
+    return Column(
+      children: [
+        Text("TODO Three Cards")
+      ]
+    );
   }
 
   Column defaultContents() {
@@ -60,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         ImageHelpers.randomPicture(),
         ElevatedButton(
-          onPressed: start(),
+          onPressed: () => changeContents("three"),
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all<Color>(Colors.purple.shade600)
           ),
@@ -77,16 +84,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   Row coinRow() {
+    debugPrint(_showContents);
+    String welcomeText = "Welcome to my game. Your goal is to buy images and collect them in sets. Here is your starting money!";
+
+    if (_showContents == "three") {
+      welcomeText = "TODO Three";
+    }
+    debugPrint(welcomeText);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        const Flexible(
+        Flexible(
           child: Text(
-            "Welcome to my game. Your goal is to buy images and collect them in sets. Here is your starting money!",
-            softWrap: true
+           welcomeText,
+           softWrap: true
           )
         ),
-        Widgets.numberIcon(_coins, spendCoins)
+        Widgets.numberIcon(_coins)
       ]
     );
   }

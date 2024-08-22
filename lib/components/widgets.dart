@@ -35,13 +35,13 @@ class Widgets {
     color: Colors.indigo[800],
   );
 
-  static ElevatedButton numberIcon(int coins, dynamic onPressed) {
+  static ElevatedButton numberIcon(int coins) {
     const currencyCharacter = "\u20b5";
     var textString = "$currencyCharacter $coins";
 
     return ElevatedButton(
       style: ButtonStyle(shape: iconShape()),
-      onPressed: onPressed(),
+      onPressed: () => { debugPrint("Pressed coins, ignoring")},
       child: Container(
         width: 82,
         height: 82,
