@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../components/image_helpers.dart';
 import 'credits.dart';
 
 class HomePage extends StatefulWidget {
@@ -70,16 +71,10 @@ class _HomePageState extends State<HomePage> {
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Credits.contents()]
-          /*children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],*/
+          children: [
+            ImageHelpers.randomPicture(),
+            Credits.contents()
+          ]
         ),
       ),
       floatingActionButton: FloatingActionButton(

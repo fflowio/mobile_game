@@ -12,7 +12,8 @@ class Credits {
         Widgets.linkWithText("Sport illustrations", "https://storyset.com/sport"),
         Widgets.linkWithText("Together illustrations", "https://storyset.com/together"),
         Widgets.linkWithText("Education illustrations", "https://storyset.com/education"),
-        Widgets.linkWithText("People illustrations", "https://storyset.com/people")
+        Widgets.linkWithText("People illustrations", "https://storyset.com/people"),
+        Widgets.linkWithText("Process illustrations", "https://storyset.com/process")
       ]
     );
   }
