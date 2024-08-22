@@ -24,6 +24,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _coins = 45;
+  String _showContents = "default";
 
   spendCoins() {
     if (_coins >= 10) {
@@ -33,6 +34,61 @@ class _HomePageState extends State<HomePage> {
     else {
       debugPrint("TODO what if there aren't enough coins?");
     }
+  }
+
+  start() {
+    debugPrint("TODO Start stuff");
+    _coins = 45;
+    setState(() { _coins; });
+  }
+
+  Column contentFinder() {
+    if (_showContents == "three") {
+      return threeCards();
+    }
+
+    return defaultContents();
+
+  }
+
+  Column threeCards() {
+    return Column();
+  }
+
+  Column defaultContents() {
+    return Column(
+      children: [
+        ImageHelpers.randomPicture(),
+        ElevatedButton(
+          onPressed: start(),
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all<Color>(Colors.purple.shade600)
+          ),
+          child: const Text(
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
+            "Start"
+          )
+        )
+      ]
+    );
+  }
+
+  Row coinRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Flexible(
+          child: Text(
+            "Welcome to my game. Your goal is to buy images and collect them in sets. Here is your starting money!",
+            softWrap: true
+          )
+        ),
+        Widgets.numberIcon(_coins, spendCoins)
+      ]
+    );
   }
 
   void _incrementCounter() {
@@ -84,8 +140,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 20),
-            Widgets.numberIcon(_coins, spendCoins),
-            ImageHelpers.randomPicture()
+            coinRow(),
+            const SizedBox(height: 20),
+            contentFinder()
             //Credits.contents()
           ]
         ),

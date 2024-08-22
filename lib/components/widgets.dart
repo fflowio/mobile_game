@@ -49,7 +49,6 @@ class Widgets {
           gradient: coinGradient(),
           borderRadius: const BorderRadius.all(Radius.circular(42.0)),
           border: Border.all(
-            //color: Colors.amber.shade800,
             color: Colors.orangeAccent,
             width: 7
           )
