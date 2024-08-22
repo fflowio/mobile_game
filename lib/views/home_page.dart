@@ -25,16 +25,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _coins = 45;
   String _showContents = "default";
+  List<String> _cards = [];
 
   changeContents(String newContents) {
-    debugPrint("Setting state to $newContents");
     setState(() => _showContents = newContents);
   }
 
-  spendCoins() {
+  selectCard(String cardName) {
+    debugPrint("Select card " + cardName);
     if (_coins >= 10) {
       _coins -= 10;
-      setState(() { _coins; });
+      _cards.add(cardName);
+
+      setState(() {
+        _coins;
+        _cards;
+      });
     }
     else {
       debugPrint("TODO what if there aren't enough coins?");
@@ -42,13 +48,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget contentFinder() {
-    debugPrint(_showContents);
-
     if (_showContents == "three") {
-      debugPrint("Three cards");
       return threeCards();
     } else {
-      debugPrint("Default");
       return defaultContents();
     }
 
@@ -57,9 +59,11 @@ class _HomePageState extends State<HomePage> {
   Column threeCards() {
     return Column(
       children: [
-        ImageHelpers.randomPictureLink(),
-        ImageHelpers.randomPictureLink(),
-        ImageHelpers.randomPictureLink()
+        ImageHelpers.randomPictureLink(selectCard),
+        const SizedBox(height: 10),
+        ImageHelpers.randomPictureLink(selectCard),
+        const SizedBox(height: 10),
+        ImageHelpers.randomPictureLink(selectCard)
       ]
     );
   }
@@ -86,21 +90,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Row coinRow() {
-    debugPrint(_showContents);
     String welcomeText = "Welcome to my game. Your goal is to buy images and collect them in sets. Here is your starting money!";
 
     if (_showContents == "three") {
-      welcomeText = "There are three cards below. Each one costs 10 coins. Click on a card to select it.";
+      welcomeText = "There are three cards below. Some of them might be the same. Each one costs 10 coins. Click on a card to choose it for your sets.";
     }
-    debugPrint(welcomeText);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Flexible(
           child: Text(
-           welcomeText,
-           softWrap: true
+            welcomeText,
+            softWrap: true,
+            style: const TextStyle(fontSize: 15)
           )
         ),
         Widgets.numberIcon(_coins)

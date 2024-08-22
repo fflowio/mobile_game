@@ -13,7 +13,7 @@ class ImageHelpers {
     return SvgPicture.asset(name, height: height.toDouble());
   }
 
-  static Widget randomPictureLink() {
+  static Widget randomPictureLink(dynamic selectCard) {
     String category = categories[_random.nextInt(categories.length)];
     String type = "";
 
@@ -25,6 +25,9 @@ class ImageHelpers {
 
     String name = "assets/images/$category$type.svg";
     debugPrint(name);
-    return getPicture(name, 150);
+    return ElevatedButton(
+      onPressed: () => selectCard(name),
+      child: getPicture(name, 150)
+    );
   }
 }
