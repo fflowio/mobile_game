@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../components/image_helpers.dart';
+import '../components/widgets.dart';
 import 'credits.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +23,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
+  int _coins = 45;
+
+  spendCoins() {
+    if (_coins >= 10) {
+      _coins -= 10;
+      setState(() { _coins; });
+    }
+    else {
+      debugPrint("TODO what if there aren't enough coins?");
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -31,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      _coins;
     });
   }
 
@@ -70,18 +81,15 @@ class _HomePageState extends State<HomePage> {
           // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
           // action in the IDE, or press "p" in the console), to see the
           // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ImageHelpers.randomPicture(),
-            Credits.contents()
+            const SizedBox(height: 20),
+            Widgets.numberIcon(_coins, spendCoins),
+            ImageHelpers.randomPicture()
+            //Credits.contents()
           ]
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      )
     );
   }
 }
