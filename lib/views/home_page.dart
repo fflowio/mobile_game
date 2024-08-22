@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Column contentFinder() {
+  Widget contentFinder() {
     debugPrint(_showContents);
 
     if (_showContents == "three") {
@@ -57,7 +57,9 @@ class _HomePageState extends State<HomePage> {
   Column threeCards() {
     return Column(
       children: [
-        Text("TODO Three Cards")
+        ImageHelpers.randomPictureLink(),
+        ImageHelpers.randomPictureLink(),
+        ImageHelpers.randomPictureLink()
       ]
     );
   }
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage> {
   Column defaultContents() {
     return Column(
       children: [
-        ImageHelpers.randomPicture(),
+        ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
         ElevatedButton(
           onPressed: () => changeContents("three"),
           style: ButtonStyle(
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> {
     String welcomeText = "Welcome to my game. Your goal is to buy images and collect them in sets. Here is your starting money!";
 
     if (_showContents == "three") {
-      welcomeText = "TODO Three";
+      welcomeText = "There are three cards below. Each one costs 10 coins. Click on a card to select it.";
     }
     debugPrint(welcomeText);
 
