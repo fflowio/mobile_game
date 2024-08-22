@@ -7,10 +7,10 @@ class ImageHelpers {
   static final List<String> categories = ["Rollers", "SportFamily", "SpringFlower"];
   static final List<String> allTypes = ["Amico", "Bro", "Cuate", "Pana", "Rafiki"];
   static final List<String> limitedTypes = ["Amico", "Bro", "Pana", "Rafiki"];
-  static final _random = new Random();
+  static final _random = Random();
 
-  static Widget getPicture(String name, int height) {
-    return SvgPicture.asset(name, height: height.toDouble());
+  static Widget getPicture(String name, int width) {
+    return SvgPicture.asset(name, width: width.toDouble());
   }
 
   static Widget randomPictureLink(dynamic selectCard) {
@@ -27,7 +27,18 @@ class ImageHelpers {
     debugPrint(name);
     return ElevatedButton(
       onPressed: () => selectCard(name),
-      child: getPicture(name, 150)
+      style: ButtonStyle(
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: BorderSide(
+              color: Colors.purple.shade600,
+              width: 4
+            ),
+          )
+        )
+      ),
+      child: getPicture(name, 160)
     );
   }
 }

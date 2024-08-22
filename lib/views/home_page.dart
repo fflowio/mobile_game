@@ -25,14 +25,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _coins = 45;
   String _showContents = "default";
-  List<String> _cards = [];
+  final List<String> _cards = [];
 
   changeContents(String newContents) {
     setState(() => _showContents = newContents);
   }
 
   selectCard(String cardName) {
-    debugPrint("Select card " + cardName);
+    debugPrint("Select card $cardName");
     if (_coins >= 10) {
       _coins -= 10;
       _cards.add(cardName);
@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
     return Column(
       children: [
         ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
+        const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () => changeContents("three"),
           style: ButtonStyle(
@@ -109,17 +110,6 @@ class _HomePageState extends State<HomePage> {
         Widgets.numberIcon(_coins)
       ]
     );
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _coins;
-    });
   }
 
   @override
