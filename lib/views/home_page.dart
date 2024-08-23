@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
       return defaultContents();
     }
 
+
   }
 
   Column threeCards() {
@@ -91,20 +92,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   Row coinRow() {
-    String welcomeText = "Welcome to my game. Your goal is to buy images and collect them in sets. Here is your starting money!";
+    String welcomeText = "Welcome to my game!";
 
     if (_showContents == "three") {
-      welcomeText = "There are three cards below. Some of them might be the same. Each one costs 10 coins. Click on a card to choose it for your sets.";
+      welcomeText = "Pick a card!";
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Flexible(
+        Padding(
+          padding: const EdgeInsets.only(left: 5),
           child: Text(
             welcomeText,
-            softWrap: true,
-            style: const TextStyle(fontSize: 15)
+            style: const TextStyle(fontSize: 20),
           )
         ),
         Widgets.numberIcon(_coins)
