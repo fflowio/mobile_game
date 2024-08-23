@@ -47,9 +47,29 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Widget wallet() {
+    debugPrint(_cards.toString());
+    List<Widget> contents = [Text("My Cards", style: Widgets.defaultTextStyle())];
+
+    for (var cardPath in _cards) {
+      contents.add(ImageHelpers.getPicture(cardPath, 80));
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: contents
+    );
+  }
+
   Widget contentFinder() {
     if (_showContents == "three") {
-      return threeCards();
+      return Row(
+        children: [
+          threeCards(),
+          wallet()
+        ]
+    );
     } else {
       return defaultContents();
     }
@@ -79,11 +99,8 @@ class _HomePageState extends State<HomePage> {
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all<Color>(Colors.purple.shade600)
           ),
-          child: const Text(
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-            ),
+          child: Text(
+            style: Widgets.defaultTextStyle(),
             "Start"
           )
         )
@@ -105,7 +122,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.only(left: 5),
           child: Text(
             welcomeText,
-            style: const TextStyle(fontSize: 20),
+            style: Widgets.defaultTextStyle()
           )
         ),
         Widgets.numberIcon(_coins)

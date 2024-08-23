@@ -29,6 +29,13 @@ class Widgets {
     );
   }
 
+  static TextStyle defaultTextStyle () {
+    return const TextStyle(
+      fontSize: 20,
+      color: Colors. white
+    );
+  }
+
   static TextStyle largeTextStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
