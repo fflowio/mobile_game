@@ -51,15 +51,19 @@ class _HomePageState extends State<HomePage> {
     debugPrint(_cards.toString());
     List<Widget> contents = [
       Widgets.setContainer(),
+      const SizedBox(height: 8),
       Widgets.setContainer(),
+      const SizedBox(height: 8),
       Widgets.setContainer()
     ];
 
     for (var cardPath in _cards) {
-      contents.add(ImageHelpers.getPicture(cardPath, 80));
+      debugPrint("Card " + cardPath);
+    //  contents.add(ImageHelpers.getPicture(cardPath, 80));
     }
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: contents
     );
   }
@@ -76,8 +80,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       return defaultContents();
     }
-
-
   }
 
   Column threeCards() {
@@ -95,6 +97,7 @@ class _HomePageState extends State<HomePage> {
   Column defaultContents() {
     return Column(
       children: [
+        const SizedBox(height: 20),
         ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
         const SizedBox(height: 20),
         ElevatedButton(

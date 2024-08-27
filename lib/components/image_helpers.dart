@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ImageHelpers {
-  static final List<String> categories = ["Rollers", "SportFamily", "SpringFlower"];
+  static final List<String> categories = ["Rollers", "Journey", "SpringFlower"];
   static final List<String> allTypes = ["Amico", "Bro", "Cuate", "Pana", "Rafiki"];
   static final List<String> limitedTypes = ["Amico", "Bro", "Pana", "Rafiki"];
   static final _random = Random();
@@ -17,7 +17,7 @@ class ImageHelpers {
     String category = categories[_random.nextInt(categories.length)];
     String type = "";
 
-    if (category == "SpringFlower") {
+    if (category == "SpringFlower" || category == "Journey") {
       type = allTypes[_random.nextInt(allTypes.length)];
     } else {
       type = limitedTypes[_random.nextInt(limitedTypes.length)];
@@ -38,7 +38,7 @@ class ImageHelpers {
           )
         )
       ),
-      child: getPicture(name, 160)
+      child: getPicture(name, 164)
     );
   }
 }

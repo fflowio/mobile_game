@@ -9,7 +9,7 @@ class Credits {
     return Column(
       children: [
         Widgets.linkWithText("Many thanks to StorySet for the illustrations", "https://storyset.com"),
-        Widgets.linkWithText("Sport illustrations", "https://storyset.com/sport"),
+        Widgets.linkWithText("Nature illustrations", "https://storyset.com/nature"),
         Widgets.linkWithText("Together illustrations", "https://storyset.com/together"),
         Widgets.linkWithText("Education illustrations", "https://storyset.com/education"),
         Widgets.linkWithText("People illustrations", "https://storyset.com/people"),
