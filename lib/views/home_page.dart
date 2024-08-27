@@ -23,23 +23,48 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _coins = 100;
+  int _coins = 120;
+  int _setCount = 0;
   String _showContents = "default";
-  final List<String> _set1 = [];
-  final List<String> _set2 = [];
-  final List<String> _set3 = [];
+  List<String> _set1 = [];
+  List<String> _set2 = [];
+  List<String> _set3 = [];
 
   changeContents(String newContents) {
+    debugPrint("Change contents pressed $newContents");
+
     setState(() => _showContents = newContents);
   }
 
+  resetGame() async {
+    debugPrint("Reset");
+    _coins = 120;
+    _setCount = 0;
+    _set1 = [];
+    _set2 = [];
+    _set3 = [];
+    setState(() {  });
+
+    changeContents("start");
+  }
+
   addCardToNextAvailableSet(String cardName) {
+    //debugPrint(cardName);
     if (cardCanGoInSet(cardName, _set1)) {
       _set1.add(cardName);
+      if (_set1.length == 4) {
+        _setCount += 1;
+      }
     } else if (cardCanGoInSet(cardName, _set2)) {
       _set2.add(cardName);
+      if (_set2.length == 4) {
+        _setCount += 1;
+      }
     } else if (cardCanGoInSet(cardName, _set3)) {
       _set3.add(cardName);
+      if (_set3.length == 4) {
+        _setCount += 1;
+      }
     } else {
       debugPrint("CARD DOES NOT FIT ANYWHERE");
     }
@@ -55,6 +80,7 @@ class _HomePageState extends State<HomePage> {
         if (set.length == 1) {
           return true;
         } else if (categoryMatch(set[1], cardName)) {
+          debugPrint("Matched category for 2/3 ");
           return true;
         }
       }
@@ -62,6 +88,7 @@ class _HomePageState extends State<HomePage> {
         if (set.length == 1) {
           return true;
         } else if (typeMatch(set[1], cardName)) {
+          debugPrint("Matched type for 2/3");
           return true;
         }
       }
@@ -75,7 +102,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   bool typeMatch(setCard, newCard) {
-    debugPrint(setCard.substring(21, 24));
     return setCard.substring(21, 24) == newCard.substring(21, 24);
   }
 
@@ -86,14 +112,33 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _coins;
         _set1;
+        _set2;
+        _set3;
       });
+
+      if (_coins == 0) {
+        changeContents("finish");
+      }
     }
     else {
       debugPrint("TODO what if there aren't enough coins?");
+      changeContents("finish");
     }
   }
 
-  Widget wallet() {
+  Column chooseCards() {
+    return Column(
+      children: [
+        ImageHelpers.randomPictureLink(selectCard),
+        const SizedBox(height: 10),
+        ImageHelpers.randomPictureLink(selectCard),
+        const SizedBox(height: 10),
+        ImageHelpers.randomPictureLink(selectCard)
+      ]
+    );
+  }
+
+  Column wallet() {
     List<Widget> contents = [
       Widgets.setContainer(_set1),
       const SizedBox(height: 8),
@@ -108,48 +153,60 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget finishPage() {
+    String result = "You completed $_setCount set";
+    if (_setCount > 1) {
+      result += "s";
+    }
+
+    List<Widget> children = [
+      const SizedBox(height: 40),
+      Text(
+        "Congratulations!!",
+        style: Widgets.celebrateTextStyle
+      ),
+      Text(result, style: Widgets.subTextStyle),
+      const SizedBox(height: 40),
+      Widgets.defaultButton(resetGame, "Play again"),
+      const SizedBox(height: 40)
+    ];
+
+    children += (Credits.contents());
+
+    return Column(
+      children: children
+    );
+  }
+
   Widget contentBuilder() {
-    if (_showContents == "three") {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          threeCards(),
-          wallet()
-        ]
-      );
+    //debugPrint(_showContents);
+    if (_showContents == "start") {
+      return gamePage();
+    } else if (_showContents == "finish") {
+      return finishPage();
     } else {
       return defaultContents();
     }
   }
 
-  Column threeCards() {
-    return Column(
+  Row gamePage() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        ImageHelpers.randomPictureLink(selectCard),
-        const SizedBox(height: 10),
-        ImageHelpers.randomPictureLink(selectCard),
-        const SizedBox(height: 10),
-        ImageHelpers.randomPictureLink(selectCard)
+        chooseCards(),
+        wallet()
       ]
     );
   }
 
   Column defaultContents() {
+    debugPrint("Default contents, will set start");
     return Column(
       children: [
         const SizedBox(height: 50),
         ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
         const SizedBox(height: 50),
-        ElevatedButton(
-          onPressed: () => changeContents("three"),
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all<Color>(Colors.purple.shade600)
-          ),
-          child: Text(
-            style: Widgets.defaultTextStyle(),
-            "Start"
-          )
-        )
+        Widgets.defaultButton(resetGame, "Start")
       ]
     );
   }

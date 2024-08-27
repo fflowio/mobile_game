@@ -44,6 +44,35 @@ class Widgets {
     color: Colors.indigo[800],
   );
 
+  static TextStyle celebrateTextStyle = TextStyle(
+    fontSize: 26,
+    fontWeight: FontWeight.bold,
+    color: Colors.red[800],
+  );
+
+  static TextStyle subTextStyle = const TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.bold,
+    color: Colors.yellowAccent,
+  );
+
+  static ElevatedButton defaultButton(dynamic onPressed, String text) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all<Color>(Colors.purple.shade600)
+      ),
+      child: Text(
+        style: Widgets.defaultTextStyle(),
+        text
+      )
+    );
+  }
+
+  static onWidgetPressed() {
+    debugPrint("Widget pressed");
+  }
+
   static ElevatedButton numberIcon(int coins) {
     const currencyCharacter = "\u20b5";
     var textString = "$currencyCharacter$coins";
@@ -118,12 +147,17 @@ class Widgets {
     }
 
     return GridView(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
       children: children
     );
   }
 
   static Padding setContainer(set) {
+    Color borderColor = Colors.grey;
+    if (set.length == 4) {
+      borderColor = Colors.green;
+    }
+
     return Padding(
       padding: const EdgeInsets.only(top: 7),
       child: Container(
@@ -131,7 +165,7 @@ class Widgets {
         height: 160,
         decoration: BoxDecoration(
           border: Border.all(
-              color: Colors.grey,
+              color: borderColor,
               width: 4
           )
         ),
