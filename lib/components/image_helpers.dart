@@ -28,7 +28,8 @@ class ImageHelpers {
     return ElevatedButton(
       onPressed: () => selectCard(name),
       style: ButtonStyle(
-        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          minimumSize: WidgetStateProperty.all(const Size(164, 164)),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
             side: BorderSide(
