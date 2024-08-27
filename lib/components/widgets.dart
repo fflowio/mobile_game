@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'image_helpers.dart';
+
 class Widgets {
   static Padding linkWithText(String text, String path) {
     return Padding(
@@ -85,7 +87,13 @@ class Widgets {
     return shape;
   }
 
-  static Container imageHolder() {
+  static Container imageHolder(String imageName) {
+    Widget child = const Text("");
+    if (imageName != "empty") {
+      debugPrint("Getting image " + imageName);
+      child = ImageHelpers.getPicture(imageName, 75);
+    }
+
     return Container(
       width: 76,
       height: 76,
@@ -95,10 +103,28 @@ class Widgets {
           width: 1
         )
       ),
+      child: child
     );
   }
 
-  static Padding setContainer() {
+  static GridView childrenForSet(set) {
+    List<Widget> children = [];
+
+    for (var cardPath in set) {
+      children.add(imageHolder(cardPath));
+    }
+
+    for (int i = 0; i <= (4 - set.length); i++) {
+      children.add(imageHolder("empty"));
+    }
+
+    return GridView(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      children: children
+    );
+  }
+
+  static Padding setContainer(set) {
     return Padding(
       padding: const EdgeInsets.only(top: 7),
       child: Container(
@@ -110,22 +136,7 @@ class Widgets {
               width: 4
           )
         ),
-        child: Row(
-          children: [
-            Column(
-              children: [
-                imageHolder(),
-                imageHolder()
-              ]
-            ),
-            Column(
-              children: [
-                imageHolder(),
-                imageHolder()
-              ]
-            )
-          ]
-        )
+        child: childrenForSet(set)
       )
     );
   }

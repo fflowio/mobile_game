@@ -25,7 +25,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _coins = 45;
   String _showContents = "default";
-  final List<String> _cards = [];
+  final List<String> _set1 = [];
+  final List<String> _set2 = [];
+  final List<String> _set3 = [];
 
   changeContents(String newContents) {
     setState(() => _showContents = newContents);
@@ -33,31 +35,32 @@ class _HomePageState extends State<HomePage> {
 
   selectCard(String cardName) {
     debugPrint("Select card $cardName");
-    /*if (_coins >= 10) {
+    if (_coins >= 10) {
       _coins -= 10;
-      _cards.add(cardName);
+      _set1.add(cardName);
 
       setState(() {
         _coins;
-        _cards;
+        _set1;
       });
     }
     else {
       debugPrint("TODO what if there aren't enough coins?");
-    }*/
+    }
   }
 
   Widget wallet() {
-    debugPrint(_cards.toString());
+    debugPrint(_set1.toString());
+    debugPrint(_set2.toString());
     List<Widget> contents = [
-      Widgets.setContainer(),
+      Widgets.setContainer(_set1),
       const SizedBox(height: 8),
-      Widgets.setContainer(),
+      Widgets.setContainer(_set2),
       const SizedBox(height: 8),
-      Widgets.setContainer()
+      Widgets.setContainer(_set3)
     ];
 
-    for (var cardPath in _cards) {
+    for (var cardPath in _set1) {
       debugPrint("Card " + cardPath);
     //  contents.add(ImageHelpers.getPicture(cardPath, 80));
     }
@@ -97,9 +100,9 @@ class _HomePageState extends State<HomePage> {
   Column defaultContents() {
     return Column(
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 50),
         ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
-        const SizedBox(height: 20),
+        const SizedBox(height: 50),
         ElevatedButton(
           onPressed: () => changeContents("three"),
           style: ButtonStyle(
