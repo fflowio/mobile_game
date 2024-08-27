@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ImageHelpers {
-  static final List<String> categories = ["Rollers", "Journey", "SpringFlower"];
+  static final List<String> categories = ["Rollers", "Journey", "SFlower"];
   static final List<String> allTypes = ["Amico", "Bro", "Cuate", "Pana", "Rafiki"];
   static final List<String> limitedTypes = ["Amico", "Bro", "Pana", "Rafiki"];
   static final _random = Random();
@@ -24,7 +24,7 @@ class ImageHelpers {
     }
 
     String name = "assets/images/$category$type.svg";
-    debugPrint(name);
+
     return ElevatedButton(
       onPressed: () => selectCard(name),
       style: ButtonStyle(

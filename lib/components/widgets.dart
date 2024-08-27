@@ -39,14 +39,14 @@ class Widgets {
   }
 
   static TextStyle strongTextStyle = TextStyle(
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: FontWeight.bold,
     color: Colors.indigo[800],
   );
 
   static ElevatedButton numberIcon(int coins) {
     const currencyCharacter = "\u20b5";
-    var textString = "$currencyCharacter $coins";
+    var textString = "$currencyCharacter$coins";
 
     return ElevatedButton(
       style: ButtonStyle(shape: iconShape()),
@@ -63,7 +63,7 @@ class Widgets {
           )
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
             textString,
             textAlign: TextAlign.center,
@@ -90,7 +90,6 @@ class Widgets {
   static Container imageHolder(String imageName) {
     Widget child = const Text("");
     if (imageName != "empty") {
-      debugPrint("Getting image " + imageName);
       child = ImageHelpers.getPicture(imageName, 75);
     }
 

@@ -23,7 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _coins = 45;
+  int _coins = 100;
   String _showContents = "default";
   final List<String> _set1 = [];
   final List<String> _set2 = [];
@@ -33,12 +33,56 @@ class _HomePageState extends State<HomePage> {
     setState(() => _showContents = newContents);
   }
 
+  addCardToNextAvailableSet(String cardName) {
+    if (cardCanGoInSet(cardName, _set1)) {
+      _set1.add(cardName);
+    } else if (cardCanGoInSet(cardName, _set2)) {
+      _set2.add(cardName);
+    } else if (cardCanGoInSet(cardName, _set3)) {
+      _set3.add(cardName);
+    } else {
+      debugPrint("CARD DOES NOT FIT ANYWHERE");
+    }
+  }
+
+  bool cardCanGoInSet(String cardName, List<String> set) {
+    if (set.isEmpty) {
+      return true;
+    } else if (set.length == 4) {
+      return false;
+    } else {
+      if (categoryMatch(set[0], cardName)) {
+        if (set.length == 1) {
+          return true;
+        } else if (categoryMatch(set[1], cardName)) {
+          return true;
+        }
+      }
+      else if (typeMatch(set[0], cardName)){
+        if (set.length == 1) {
+          return true;
+        } else if (typeMatch(set[1], cardName)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  bool categoryMatch(setCard, newCard) {
+    return setCard.substring(14, 21) == newCard.substring(14, 21);
+  }
+
+  bool typeMatch(setCard, newCard) {
+    debugPrint(setCard.substring(21, 24));
+    return setCard.substring(21, 24) == newCard.substring(21, 24);
+  }
+
   selectCard(String cardName) {
-    debugPrint("Select card $cardName");
     if (_coins >= 10) {
       _coins -= 10;
-      _set1.add(cardName);
-
+      addCardToNextAvailableSet(cardName);
       setState(() {
         _coins;
         _set1;
@@ -50,8 +94,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget wallet() {
-    debugPrint(_set1.toString());
-    debugPrint(_set2.toString());
     List<Widget> contents = [
       Widgets.setContainer(_set1),
       const SizedBox(height: 8),
@@ -59,11 +101,6 @@ class _HomePageState extends State<HomePage> {
       const SizedBox(height: 8),
       Widgets.setContainer(_set3)
     ];
-
-    for (var cardPath in _set1) {
-      debugPrint("Card " + cardPath);
-    //  contents.add(ImageHelpers.getPicture(cardPath, 80));
-    }
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
