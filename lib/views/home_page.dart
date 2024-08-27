@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
 
   selectCard(String cardName) {
     debugPrint("Select card $cardName");
-    if (_coins >= 10) {
+    /*if (_coins >= 10) {
       _coins -= 10;
       _cards.add(cardName);
 
@@ -44,32 +44,35 @@ class _HomePageState extends State<HomePage> {
     }
     else {
       debugPrint("TODO what if there aren't enough coins?");
-    }
+    }*/
   }
 
   Widget wallet() {
     debugPrint(_cards.toString());
-    List<Widget> contents = [Text("My Cards", style: Widgets.defaultTextStyle())];
+    List<Widget> contents = [
+      Widgets.setContainer(),
+      Widgets.setContainer(),
+      Widgets.setContainer()
+    ];
 
     for (var cardPath in _cards) {
       contents.add(ImageHelpers.getPicture(cardPath, 80));
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      mainAxisAlignment: MainAxisAlignment.end,
       children: contents
     );
   }
 
-  Widget contentFinder() {
+  Widget contentBuilder() {
     if (_showContents == "three") {
       return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           threeCards(),
           wallet()
         ]
-    );
+      );
     } else {
       return defaultContents();
     }
@@ -108,28 +111,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Row coinRow() {
-    String welcomeText = "Welcome to my game!";
-
-    if (_showContents == "three") {
-      welcomeText = "Pick a card!";
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 5),
-          child: Text(
-            welcomeText,
-            style: Widgets.defaultTextStyle()
-          )
-        ),
-        Widgets.numberIcon(_coins)
-      ]
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -147,6 +128,7 @@ class _HomePageState extends State<HomePage> {
         // Here we take the value from the HomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        actions: [Widgets.numberIcon(_coins)]
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
@@ -167,10 +149,8 @@ class _HomePageState extends State<HomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 20),
-            coinRow(),
-            const SizedBox(height: 20),
-            contentFinder()
+            const SizedBox(height: 10),
+            contentBuilder()
             //Credits.contents()
           ]
         ),

@@ -36,8 +36,8 @@ class Widgets {
     );
   }
 
-  static TextStyle largeTextStyle = TextStyle(
-    fontSize: 24,
+  static TextStyle strongTextStyle = TextStyle(
+    fontSize: 20,
     fontWeight: FontWeight.bold,
     color: Colors.indigo[800],
   );
@@ -50,24 +50,24 @@ class Widgets {
       style: ButtonStyle(shape: iconShape()),
       onPressed: () => { debugPrint("Pressed coins, ignoring")},
       child: Container(
-        width: 82,
-        height: 82,
+        width: 60,
+        height: 60,
         decoration: BoxDecoration(
           gradient: coinGradient(),
           borderRadius: const BorderRadius.all(Radius.circular(42.0)),
           border: Border.all(
             color: Colors.orangeAccent,
-            width: 7
+            width: 5
           )
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 18),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Text(
             textString,
             textAlign: TextAlign.center,
-            style: largeTextStyle
+            style: strongTextStyle
           )
-        ),
+        )
       )
     );
   }
@@ -83,5 +83,50 @@ class Widgets {
     );
 
     return shape;
+  }
+
+  static Container imageHolder() {
+    return Container(
+      width: 76,
+      height: 76,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.grey,
+          width: 1
+        )
+      ),
+    );
+  }
+
+  static Padding setContainer() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 7),
+      child: Container(
+        width: 160,
+        height: 160,
+        decoration: BoxDecoration(
+          border: Border.all(
+              color: Colors.grey,
+              width: 4
+          )
+        ),
+        child: Row(
+          children: [
+            Column(
+              children: [
+                imageHolder(),
+                imageHolder()
+              ]
+            ),
+            Column(
+              children: [
+                imageHolder(),
+                imageHolder()
+              ]
+            )
+          ]
+        )
+      )
+    );
   }
 }
