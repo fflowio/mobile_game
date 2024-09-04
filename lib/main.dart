@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'views/home_page.dart';
+import 'views/game.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark
       ),
-      home: const HomePage(title: 'My Game'),
+      home: const Game(),
     );
   }
 }

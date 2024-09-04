@@ -4,8 +4,8 @@ import '../components/image_helpers.dart';
 import '../components/widgets.dart';
 import 'credits.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+class Game extends StatefulWidget {
+  const Game({super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -16,13 +16,11 @@ class HomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
-
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<Game> createState() => _GameState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _GameState extends State<Game> {
   int _coins = 120;
   int _setCount = 0;
   String _showContents = "default";
@@ -221,13 +219,8 @@ class _HomePageState extends State<HomePage> {
     // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the HomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: const Text("My Game"),
         actions: [Widgets.numberIcon(_coins)]
       ),
       body: Center(

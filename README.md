@@ -1,16 +1,189 @@
 # mobile_game
 
-A new Flutter project.
+A workshop for beginners, where you get to build your own flutter game
 
-## Getting Started
+## About Flutter
 
-This project is a starting point for a Flutter application.
+Flutter is a programming language that runs... anywhere! But most importantly, you can run
+it on your mobile phone.
 
-A few resources to get you started if this is your first Flutter project:
+In this workshop, we'll provide you with the scaffolding to write your first flutter code. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Setup
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Before you start, you need a working developer environment with flutter, and a copy of the code
+for the workshop.
+
+This might have been done for you, TODO how to check
+
+If not, here is how to set up a working development environment for this workshop 
+https://github.com/fflowio/mobile-game/blob/main/README_SETUP.md
+
+# Code
+
+When you start this workshop, you already have an IDE open. At the left-hand side is a list
+of files, there are a lot. But there is good news, you can ignore most of them!
+
+## Flutter-generated files
+
+Flutter comes with lots of files that support the way your code works with a phone. They are 
+generated for you every time you create a new flutter project. For this workshop, you don't need
+to worry about them.
+
+## Folders, files and other structure
+
+When you write a code project, it generally ends up being quite long. You'll notice there are 
+already a lot of files, and you haven't even started yet! But if all the code was in one
+single file, it would look even messier.
+
+Developers tidy and structure their code by splitting it up. It's a bit like writing a book, or
+even a series of books. There's no absolute rule about where and how to split up your code, but
+it's roughly like this:
+
+| Code                | Literature   |
+| ------------------- | ----------   |
+| Folder / directory  | Book         |
+| File                | Chapter      |
+| Method / function   | Paragraph    |
+| ------------------- | ----------   |
+
+A method, also called a function, is generally related to a single thought or action, with several 
+methods in a file, and several files in a folder.
+
+In this workshop, you will work on several functions, all in the game.dart file.
+
+## Workshop files
+
+We have provided files which give you a framework and some useful helper functions, and a game
+file where you will write your code.
+
+They are all in the lib/ folder, as follows:
+
+- lib/main.dart
+- lib/views/game.dart [here is where you will work]
+- lib/views/credits.dart
+- lib/components/widgets.dart
+
+## Run the blank project
+
+Run the project. There isn't much to see yet, that's because we'll be coding it in the next steps.
+But let's just see the blank project first!
+
+### VSCode
+
+TODO F5 instructions
+
+### Android Studio
+
+In Android Studio, at the top of the screen, in the middle you'll see some menus. The look like this:
+
+![img.png](img.png)
+
+1. Run the game
+   1.1 Select run options
+      1.1.1 Chrome(web) in the first menu
+      1.2.2 main.dart in the second menu 
+
+   1.2 Run
+       1.2.1 Click on the green triangle next to the third menu
+
+2. Check it's all working
+
+You should see something like this:
+
+![img_1.png](img_1.png)
+
+## Coding Context
+
+At the top of game.dart, you'll see some imports, these are helpful functions you'll need later on.
+
+Next come two classes:
+
+```class Game extends StatefulWidget {```
+and
+```class _GameState extends State<Game> {```
+
+State is the way a mobile app remembers information between one click and the next. Without it,
+everything would always go back to the beginning and start again. 
+
+The second class, _GameState, has two methods:
+
+TODO signatures of game() method
+and
+```
+@override
+Widget build(BuildContext context) {
+```
+
+@override means there's some stuff we inherit from flutter that does things for us, for example the
+AppBar.
+
+All your code will be written in lib/views/game.dart. We will tell you which method to use to make your
+changes, or when it's a good idea to create a new method.
+
+To find a method, look for round brackets () and the squirly brackets {} like this:
+
+```
+methodName() {
+}
+```
+
+The round brackets () hold parameters, information that you will pass into the method.
+The squirly brackets {} mark the beginning and end of the code that happens in the method.
+
+Most of your code will go inside a method, that is, between { and } 
+
+Let's get started.
+
+### Name
+
+3. Choose a name
+
+Find this line in the build() method:
+```
+title: const Text("My Game")
+```
+  3.1 Change "My Game" to your chosen name for the game
+
+As soon as you save, you should see the browser now shows your chosen name.
+
+Congratulations, you've just written your first line of code!
+
+### Background color
+
+4. Choose a background color for your game
+
+Find this line in the game() method:
+
+```
+color: Colors.purple,
+```
+
+   4.1 Change Colors.purple to Colors.green
+   4.2 Change Colors.green to Colors.deepOrange
+
+Did you notice anything while you were typing? Your IDE started helping you, by telling you what 
+colours it knows about.
+
+Try a few different colours.
+
+We're using dark mode for this app, which means it will have white text, so it's best to use a dark 
+background.
+
+### Comments
+
+5. Comments
+
+    5.1 Comment out the color line, like this:
+
+```
+// color: Colors.purple,
+```
+
+All programming languages have a way of writing comments, usually so that you can explain what's
+happening to other developers. Comments are also useful to remove some code temporarily.
+
+What happened when you commented the color line?
+
+
+
