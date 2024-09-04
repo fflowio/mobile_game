@@ -161,10 +161,10 @@ Congratulations, you've just written your first line of code!
 Find this line in the game() method:
 
 ```
-color: Colors.purple,
+color: Colors.deepPurple,
 ```
 
-   4.1 Change Colors.purple to Colors.green
+   4.1 Change Colors.deepPurple to Colors.green
    4.2 Change Colors.green to Colors.deepOrange
 
 Did you notice anything while you were typing? Your IDE started helping you, by telling you what 
@@ -231,4 +231,5 @@ Look in the game() method, it returns a Container.
 
 The result should look like this!
 
+![img_2.png](img_2.png)
 

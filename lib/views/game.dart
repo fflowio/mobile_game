@@ -15,7 +15,7 @@ class _GameState extends State<Game> {
 
   Widget game() {
     return Container(
-      color: Colors.purple,
+      color: Colors.deepPurple,
       constraints: const BoxConstraints(maxWidth: 450)
     );
   }
