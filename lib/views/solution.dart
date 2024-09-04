@@ -176,14 +176,14 @@ class _GameState extends State<Game> {
     );
   }
 
-  Widget contentBuilder() {
+  Widget game() {
     //debugPrint(_showContents);
     if (_showContents == "start") {
       return gamePage();
     } else if (_showContents == "finish") {
       return finishPage();
     } else {
-      return defaultContents();
+      return welcome();
     }
   }
 
@@ -197,7 +197,7 @@ class _GameState extends State<Game> {
     );
   }
 
-  Column defaultContents() {
+  Column welcome() {
     debugPrint("Default contents, will set start");
     return Column(
       children: [
@@ -243,7 +243,7 @@ class _GameState extends State<Game> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            contentBuilder()
+            game()
             //Credits.contents()
           ]
         ),

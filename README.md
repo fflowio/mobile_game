@@ -63,6 +63,9 @@ They are all in the lib/ folder, as follows:
 - lib/views/game.dart [here is where you will work]
 - lib/views/credits.dart
 - lib/components/widgets.dart
+- lib/components/image_helpers.dart
+
+You'll find out more about them in the workshop.
 
 ## Run the blank project
 
@@ -131,7 +134,9 @@ methodName() {
 The round brackets () hold parameters, information that you will pass into the method.
 The squirly brackets {} mark the beginning and end of the code that happens in the method.
 
-Most of your code will go inside a method, that is, between { and } 
+Most of your code will go inside a method, that is, between { and } for a method()
+
+Methods need to go inside a class, which also has { and }
 
 Let's get started.
 
@@ -185,5 +190,45 @@ happening to other developers. Comments are also useful to remove some code temp
 
 What happened when you commented the color line?
 
+Keep it commented for now, so that the page is plain black. We're about to start putting content on 
+the page, and a black background will work well. You'll have a chance to add colours back later on.
+
+## Welcome
+
+6. Welcome
+
+Let's start with a welcome page. 
+
+  6.1 Add this new method inside the _GameState class
+
+```  
+  Column welcome() {
+    return Column(
+      children: [
+        const SizedBox(height: 50),
+        ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
+        const SizedBox(height: 50)
+      ]
+    );
+  }
+```
+
+You'll see that nothing changes in the screen. Why not? Because, in order to run the code in a method,
+we need to call it.
+
+We want to put it as contents of the Container in the game() method, and the way flutter does this
+is with the child keyword, 
+
+Look in the game() method, it returns a Container. 
+
+   6.2 Edit the previous line:
+    ```constraints: const BoxConstraints(maxWidth: 450)```
+   add a comma at the end so it looks like this:
+   ```constraints: const BoxConstraints(maxWidth: 450),```
+
+   6.3 Add this new line below the comma:
+   ```child: welcome()```
+
+The result should look like this!
 
 
