@@ -245,8 +245,10 @@ In the welcome() method you just created
 
 You're using commas quite a bit in this workshop, and here's a mini explanation. 
 
-Many programming languages, including flutter and dart, when they want to collect a list of stuff, 
-do it in what they call an array. An array looks like this:
+Use square brackets to identify the contents of the list. 
+
+Many programming languages use the square brackets, and most of them call it an Array, in flutter
+and dart it's called it a List.
 
 [a, b, c, d]
 
@@ -273,7 +275,7 @@ Add a comma to the last SizedBox in the welcome method, like this:
 
 ```const SizedBox(height: 50),```
 
-If you look around, you'll see it's in a list of things inside square array brackets [ ]
+If you look around, you'll see it's in a list of things inside square brackets [ ]
 
 4.1.3 Add a start button
 
@@ -437,7 +439,7 @@ the app state, like this:
 
 4.5.3 Does it work?
 
-Click the Start button again. Now it shoudl work, and you see the "Game contents go here" text.
+Click the Start button again. Now it should work, and you see the "Game contents go here" text.
 
 In the rest of this workshop, when you call a method, if it doesn't exist, you get
 an error. But here, there's no error, and it just starts working. But you haven't written
@@ -484,7 +486,7 @@ In the pageContents() method, change the Text line to call cardsToChoose()
   }
 
 ```
-Ooops, the errors are just getting worse! You fixed the cardsToChoose() error, but now there are
+Oops, the errors are just getting worse! You fixed the cardsToChoose() error, but now there are
 three selectCard errors instead. 
 
 Take a quick look in the image_helpers.dart file at the randomPictureLink method. A helpful
@@ -517,5 +519,351 @@ The images are all in the assets/images folder. Thanks and credits to https://st
 
 6. Game logic
 
-6.1 
+6.1 Sets
+
+The game player is trying to build sets of matching cards.
+
+Configure the sets where they will be stored
+
+Like _showContents, they need to be private, and shared with all the methods in the class.
+
+6.1.1 Set variables
+
+Add these sets near the _showContents variable, at the top of the _GameState class
+
+```
+List<String> _set1 = [];
+List<String> _set2 = [];
+List<String> _set3 = [];
+```
+
+6.2 Set logic
+
+Add a new cardCanGoInSet() method near the categoryMatch() and selectCard() methods.
+
+The images we're using come in sets of 4, so a set in the game will have a maximum size of 4.
+
+6.2.1 Can you add a card to a set?
+
+Let's start with the basics: if the set size is 0, the new card can go in it. If it's 4, the new
+card can't. If it has 1,2, or 3 cards, you need some more logic, which you'll add soon. For now,
+just add a debug statement.
+
+```
+bool cardCanGoInSet(String cardName, List<String> set) {
+  if (set.isEmpty) {
+    return true;
+  } else if (set.length == 4) {
+    return false;
+  } else {
+    debugPrint("Set has 1 or more cards");
+    return false;
+  }  
+}  
+```
+
+6.3 More set logic
+
+6.2.1 Add card to next available set
+
+Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and selectCard() methods.
+
+```
+  addCardToNextAvailableSet(String cardName) {
+    //debugPrint(cardName);
+    if (cardCanGoInSet(cardName, _set1)) {
+      _set1.add(cardName);
+    } else if (cardCanGoInSet(cardName, _set2)) {
+      _set2.add(cardName);
+    } else if (cardCanGoInSet(cardName, _set3)) {
+      _set3.add(cardName);
+    } else {
+      debugPrint("CARD DOES NOT FIT ANYWHERE");
+    }
+  }
+```
+
+6.2.2 Call the new method
+
+In the selectCard() method, add this line:
+
+  ```addCardToNextAvailableSet(cardName);```
+
+This might be working now, but you can't really tell. You could start by adding debugPrint to check, 
+or just skip on and start to display the sets:
+
+7. Wallet
+
+7.1 Wallet contents
+
+The app currently only uses the left-hand side of the view. This means we can add the wallet in the
+right-hand side.
+
+Near the gamePage() method, add a new method that shows the set contents
+
+```
+Column wallet() {
+  List<Widget> contents = [
+    Widgets.setContainer(_set1),
+    const SizedBox(height: 8),
+    Widgets.setContainer(_set2),
+    const SizedBox(height: 8),
+    Widgets.setContainer(_set3)
+  ];
+
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: contents
+  );
+}
+```
+
+7.2 Call the wallet
+
+Call the new wallet() method from the gamePage() method, 
+
+Add a comma after cardsToChoose(), and then this line:
+
+```wallet()```
+
+7.3 Set state
+
+The wallet code is working, you can see it shows a grid where the cards will be added, so it's
+getting called. But it's not displaying the cards from the set contents. Why not?
+
+It's the state problem again!
+
+After you update the sets, you need to update them in the widget state, so it knows to include 
+them when it redraws.
+
+7.3.1 Set state
+
+You could add this in the addCardToNextAvailableSet() method. But that one is going to get
+pretty full of logic so to keep it a bit easier to read, we'll add it to the place that calls it.
+
+In selectCard(), under addCardToNextAvailableSet(), add this:
+
+    setState(() {
+      _set1;
+      _set2;
+      _set3;
+    });
+
+7.4 Test the wallet
+
+Now the wallet updates with the cards from the set! It should look something like this:
+
+![img_4.png](img_4.png)
+
+It's working, but, because we only added logic to add the first card to any set, they only 
+ever have one. Go back to the set logic to add cards 2, 3, and 4
+
+8 More set logic
+
+8.1 Just add them all
+
+In cardCanGoInSet() method, in the last else statement, there's a debug and you return false, 
+which means you don't allow the card to go in the set.
+
+What happens if you change it to true?
+
+```return true;```
+
+Now you can fill up the sets to get to 4, but ... they aren't matching sets. 
+
+You need more logic to make sure they match.
+
+8.2 Card category match
+
+In order to belong in a set, a card needs to be from the same category.
+
+Add a new categoryMatch() method near the selectCard() method
+
+```
+bool categoryMatch(existingCard, newCard) {
+  return existingCard.substring(14, 21) == newCard.substring(14, 21);
+}
+```
+
+If you want to understand how this method works in more detail, add debug. For example:
+
+```debugPrint(existingCard.substring(14, 21));```
+
+8.3 Call the card category match
+
+In the cardCanGoInSet() method, inside the last else statement, test the category to make the 
+decision about whether to return true or false. Add this:
+
+```
+      if (categoryMatch(set[0], cardName)) {
+        return true;
+      } else {
+        return false;
+      }  
+```
+
+8.4 Does it work?
+
+Now, the card you select should only join a set if it matches. And you should be able to fill up
+all the sets, like this!
+
+![img_5.png](img_5.png)
+
+9.0 Winning
+
+But wait, the game never ends. It just keeps trying to add cards, and noping out, because all the
+sets are full.
+
+9.1 Too many sets
+
+The logic we're about to add applies to all the sets. If you look in the addCardToNextAvailableSet()
+method, it's already got some if statements that basically do the same thing for each set. Those
+statements are about to get longer, and it's starting to look messy.
+
+Instead, we'll make a minor refactor and keep track of all the sets together.
+
+9.1.1 List of Lists
+
+When you have a list, captured between square brackets: [ a, b, c ]
+
+It turns out, you can use a list inside a list, like this: [[a,b,c], [b,c,d], [f,g,h]]
+
+We're going to do this with our sets.
+
+9.1.2 Add a sets list
+
+At the top of the GameState class, add a new sets list near the other sets 
+
+```List<List<String>> _sets = [];```
+
+You can try changing the line you just added:
+
+```List<List<String>> _sets = [_set1, _set2, _set3];```
+
+... but you'll get errors! The instance member can't be accessed in an initializer
+
+Basically, it just means it's too soon to add those contents.
+
+Go back to the first version.
+
+9.1.3 Add the sets to the bigger list.
+
+Instead, set up the sets when we reset the game
+
+Add this line into resetGame()
+
+```_sets = [_set1, _set2, _set3];```
+
+9.2 For loop
+
+In the addCardToNextAvailableSet() method, use a for loop instead of checking each set specifically.
+
+Change the contents of the method to this:
+
+```
+    for (var set in _sets) {
+      if (cardCanGoInSet(cardName, set)) {
+        set.add(cardName);
+        return;
+      }
+    }
+```    
+
+9.2.1 Does it work?
+
+With any refactor, even a minor one, check everything still works the same way it did before.
+
+9.3 fullSets variable
+
+Near the _set variables at the top of the class, add a new private fullSets variable
+
+```int _fullSets = 0;```
+
+
+In the addCardToNextAvailableSet() method, if you just added the 4th card, update the full set count
+
+Under set.add(cardName, add this:
+
+```
+      if (set.length == 4) {
+        _fullSets += 1;
+      }
+```
+
+9.4 When are all the sets full?
+
+In the selectCard() method, at the end, check if the sets are full, and if they are, change 
+to the finish page (which doesn't exist yet, but we'll get to that)
+
+```
+    if (_fullSets == 3) {
+      setState(() => _showContents = "finish");
+    }
+```
+
+9.4.1 Does it work?
+
+Sort of.
+
+If you run the game until all the sets are full, it ... goes back to the welcome page!
+
+Why?
+
+Look at the logic in pageContents()
+
+It only ever calls either the game page or the welcome page. You need to update it to call a 
+finish page. Let's build the contents first.
+
+9.5 Finish page
+
+Near the pageContents() method, Add a new finishPage() method to congratulate the player
+
+```
+  Widget finishPage() {
+    String result = "You completed the game!";
+
+    List<Widget> children = [
+      const SizedBox(height: 40),
+      Text(
+        "Congratulations!!",
+        style: Widgets.celebrateTextStyle
+      ),
+      Text(result, style: Widgets.subTextStyle),
+      const SizedBox(height: 40),
+      Widgets.defaultButton(resetGame, "Play again"),
+      const SizedBox(height: 40)
+    ];
+
+    children += (Credits.contents());
+
+    return Column(
+      children: children
+    );
+  }
+```
+
+9.6 Call the finish page
+
+In the pageContents() method, between the top if and the bottom else, add an else-if test, like this:
+
+```
+    } else if (_showContents == "finish") {
+      return finishPage();
+```
+
+9.6.1 Does it work?
+
+Run the game through, do you get to the new finish page?
+
+Excellent!
+
+But at the moment, every player will win, every time.
+
+Let's fix that next.
+
+10. Coins
+
+
+
+
 
