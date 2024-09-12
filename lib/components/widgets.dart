@@ -60,7 +60,7 @@ class Widgets {
     return ElevatedButton(
       onPressed: onPressed,
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all<Color>(Colors.purple.shade600)
+        backgroundColor: WidgetStateProperty.all<Color>(Colors.green.shade800)
       ),
       child: Text(
         style: Widgets.defaultTextStyle(),
