@@ -13,6 +13,10 @@ class ImageHelpers {
     return SvgPicture.asset(name, width: width.toDouble());
   }
 
+  /* Get a link that shows a clickable random picture
+   * Provide a selectCard method that will be implemented if someone clicks on
+   * the picture to select it.
+   */
   static Widget randomPictureLink(dynamic selectCard) {
     String category = categories[_random.nextInt(categories.length)];
     String type = "";
@@ -33,7 +37,7 @@ class ImageHelpers {
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
             side: BorderSide(
-              color: Colors.purple.shade600,
+              color: Colors.green.shade800,
               width: 4
             ),
           )
