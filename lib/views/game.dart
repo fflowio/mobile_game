@@ -13,13 +13,6 @@ class Game extends StatefulWidget {
 
 class _GameState extends State<Game> {
 
-  Widget game() {
-    return Container(
-      color: Colors.deepPurple,
-      constraints: const BoxConstraints(maxWidth: 450)
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -33,7 +26,10 @@ class _GameState extends State<Game> {
         title: const Text("My Game")
       ),
       body: Center(
-        child: game()
+        child: Container(
+          color: Colors.deepPurple,
+          constraints: const BoxConstraints(maxWidth: 450)
+        )
       )
     );
   }
