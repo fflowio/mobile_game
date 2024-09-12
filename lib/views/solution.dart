@@ -7,65 +7,55 @@ import 'credits.dart';
 class Game extends StatefulWidget {
   const Game({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   State<Game> createState() => _GameState();
 }
 
 class _GameState extends State<Game> {
-  int _coins = 120;
-  int _setCount = 0;
-  String _showContents = "default";
+  String _showContents = "welcome";
   List<String> _set1 = [];
   List<String> _set2 = [];
   List<String> _set3 = [];
+  List<List<String>> _sets = [];
+  int _fullSets = 0;
 
-  changeContents(String newContents) {
-    debugPrint("Change contents pressed $newContents");
+  void resetGame() async {
+    debugPrint("Reset");
 
-    setState(() => _showContents = newContents);
+    _sets = [_set1, _set2, _set3];
+
+    setState(() => _showContents = "start");
   }
 
-  resetGame() async {
-    debugPrint("Reset");
-    _coins = 120;
-    _setCount = 0;
-    _set1 = [];
-    _set2 = [];
-    _set3 = [];
-    setState(() {  });
+  selectCard(String cardName) {
+    debugPrint("Select card " + cardName);
+    addCardToNextAvailableSet(cardName);
 
-    changeContents("start");
+    setState(() {
+      _set1;
+      _set2;
+      _set3;
+    });
+
+    if (_fullSets == 3) {
+      setState(() => _showContents = "finish");
+    }
   }
 
   addCardToNextAvailableSet(String cardName) {
-    //debugPrint(cardName);
-    if (cardCanGoInSet(cardName, _set1)) {
-      _set1.add(cardName);
-      if (_set1.length == 4) {
-        _setCount += 1;
+    for (var set in _sets) {
+      if (cardCanGoInSet(cardName, set)) {
+        set.add(cardName);
+        if (set.length == 4) {
+          _fullSets += 1;
+        }
+        return;
       }
-    } else if (cardCanGoInSet(cardName, _set2)) {
-      _set2.add(cardName);
-      if (_set2.length == 4) {
-        _setCount += 1;
-      }
-    } else if (cardCanGoInSet(cardName, _set3)) {
-      _set3.add(cardName);
-      if (_set3.length == 4) {
-        _setCount += 1;
-      }
-    } else {
-      debugPrint("CARD DOES NOT FIT ANYWHERE");
     }
+  }
+
+  bool categoryMatch(existingCard, newCard) {
+    return existingCard.substring(14, 21) == newCard.substring(14, 21);
   }
 
   bool cardCanGoInSet(String cardName, List<String> set) {
@@ -74,65 +64,36 @@ class _GameState extends State<Game> {
     } else if (set.length == 4) {
       return false;
     } else {
+      debugPrint("Set has 1 or more cards");
       if (categoryMatch(set[0], cardName)) {
-        if (set.length == 1) {
-          return true;
-        } else if (categoryMatch(set[1], cardName)) {
-          debugPrint("Matched category for 2/3 ");
-          return true;
-        }
-      }
-      else if (typeMatch(set[0], cardName)){
-        if (set.length == 1) {
-          return true;
-        } else if (typeMatch(set[1], cardName)) {
-          debugPrint("Matched type for 2/3");
-          return true;
-        }
+        return true;
+      } else {
+        return false;
       }
     }
-
-    return false;
   }
 
-  bool categoryMatch(setCard, newCard) {
-    return setCard.substring(14, 21) == newCard.substring(14, 21);
-  }
-
-  bool typeMatch(setCard, newCard) {
-    return setCard.substring(21, 24) == newCard.substring(21, 24);
-  }
-
-  selectCard(String cardName) {
-    if (_coins >= 10) {
-      _coins -= 10;
-      addCardToNextAvailableSet(cardName);
-      setState(() {
-        _coins;
-        _set1;
-        _set2;
-        _set3;
-      });
-
-      if (_coins == 0) {
-        changeContents("finish");
-      }
-    }
-    else {
-      debugPrint("TODO what if there aren't enough coins?");
-      changeContents("finish");
-    }
-  }
-
-  Column chooseCards() {
+  Column cardsToChoose() {
     return Column(
-      children: [
-        ImageHelpers.randomPictureLink(selectCard),
-        const SizedBox(height: 10),
-        ImageHelpers.randomPictureLink(selectCard),
-        const SizedBox(height: 10),
-        ImageHelpers.randomPictureLink(selectCard)
-      ]
+        children: [
+          ImageHelpers.randomPictureLink(selectCard),
+          const SizedBox(height: 10),
+          ImageHelpers.randomPictureLink(selectCard),
+          const SizedBox(height: 10),
+          ImageHelpers.randomPictureLink(selectCard)
+        ]
+    );
+  }
+
+  Row gamePage() {
+    debugPrint("Game");
+
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          cardsToChoose(),
+          wallet()
+        ]
     );
   }
 
@@ -146,22 +107,29 @@ class _GameState extends State<Game> {
     ];
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: contents
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: contents
     );
   }
 
-  Widget finishPage() {
-    String result = "You completed $_setCount set";
-    if (_setCount > 1) {
-      result += "s";
+  Widget pageContents() {
+    if (_showContents == "start") {
+      return gamePage();
+    } else if (_showContents == "finish") {
+      return finishPage();
+    } else {
+      return welcome();
     }
+  }
+
+  Widget finishPage() {
+    String result = "You completed the game!";
 
     List<Widget> children = [
       const SizedBox(height: 40),
       Text(
-        "Congratulations!!",
-        style: Widgets.celebrateTextStyle
+          "Congratulations!!",
+          style: Widgets.celebrateTextStyle
       ),
       Text(result, style: Widgets.subTextStyle),
       const SizedBox(height: 40),
@@ -172,83 +140,34 @@ class _GameState extends State<Game> {
     children += (Credits.contents());
 
     return Column(
-      children: children
-    );
-  }
-
-  Widget game() {
-    //debugPrint(_showContents);
-    if (_showContents == "start") {
-      return gamePage();
-    } else if (_showContents == "finish") {
-      return finishPage();
-    } else {
-      return welcome();
-    }
-  }
-
-  Row gamePage() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        chooseCards(),
-        wallet()
-      ]
+        children: children
     );
   }
 
   Column welcome() {
-    debugPrint("Default contents, will set start");
     return Column(
-      children: [
-        const SizedBox(height: 50),
-        ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
-        const SizedBox(height: 50),
-        Widgets.defaultButton(resetGame, "Start")
-      ]
+        children: [
+          const SizedBox(height: 50),
+          ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
+          const SizedBox(height: 50),
+          Widgets.defaultButton(resetGame, "Start")
+        ]
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("My Game"),
-        actions: [Widgets.numberIcon(_coins)]
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-            game()
-            //Credits.contents()
-          ]
+        appBar: AppBar(
+            title: const Text("My Game")
         ),
-      )
+        body: Center(
+            child: Container(
+                color: Colors.deepPurple,
+                constraints: const BoxConstraints(maxWidth: 450),
+                child: pageContents()
+            )
+        )
     );
   }
 }
-
