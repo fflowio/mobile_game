@@ -37,7 +37,8 @@ class _GameState extends State<Game> {
   }
 
   selectCard(String cardName) {
-    debugPrint("Select card " + cardName);
+    debugPrint("Select card $cardName");
+
     addCardToNextAvailableSet(cardName);
 
     _coins -= 10;
@@ -176,7 +177,7 @@ class _GameState extends State<Game> {
           width: 375,
           child: Column(
             children: [
-              Widgets.customAppBar(_coins),
+              Widgets.customAppBar("My game", _coins),
               Container(
                 color: Colors.deepPurple,
                 constraints: const BoxConstraints(maxHeight: 580),

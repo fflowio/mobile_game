@@ -170,12 +170,12 @@ class Widgets {
     );
   }
 
-  static Padding customAppBar(int coins) {
+  static Padding customAppBar(String name, int coins) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child:
         AppBar(
-          title: const Text("My Game"),
+          title: Text(name),
           actions: [
             Widgets.numberIcon(coins)
           ]

@@ -502,6 +502,25 @@ selectCard(String cardName) {
 }
 ```
 
+5.2.1 Fix the warning
+
+Your IDE will give you a warning about using String interpolation. String interpolation syntax
+can be a bit fiddly, but luckily, we don't need to worry about the details!
+
+Hover over the String line, the IDE will offer a helpful message, like this:
+
+![img_7.png](img_7.png)
+
+Click on 
+
+```Replace with interpolation```
+
+Once it's fixed, it should look like this:
+
+```debugPrint("Select card $cardName");```
+
+If the IDE magic doesn't work, you can fix it by hand.
+
 5.3 Does it work?
 
 Your app should look like this now!
@@ -846,22 +865,11 @@ Near the pageContents() method, Add a new finishPage() method to congratulate th
 
 9.5.2 Fix the warning
 
-Your IDE will give you a warning about using String interpolation. String interpolation syntax 
-can be a bit fiddly, but luckily, we don't need to worry about the details!
+Do you remember using the IDE to help fix the interpolation warning?
 
-Hover over the String line, the IDE will offer a helpful message, like this: 
-
-![img_6.png](img_6.png)
-
-Click on 
-
-```Replace with interpolation```
-
-And magically, your code should change to this:
+Use the same trick again, and your code should change to this:
 
 ```String result = "You completed $_fullSets sets!";```
-
-If the IDE magic doesn't work, you can fix it by hand.
 
 9.6 Call the finish page
 
