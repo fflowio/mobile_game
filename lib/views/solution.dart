@@ -18,18 +18,29 @@ class _GameState extends State<Game> {
   List<String> _set3 = [];
   List<List<String>> _sets = [];
   int _fullSets = 0;
+  int _coins = 120;
 
   void resetGame() async {
     debugPrint("Reset");
 
+    _set1 = [];
+    _set2 = [];
+    _set3 = [];
     _sets = [_set1, _set2, _set3];
 
-    setState(() => _showContents = "start");
+    _coins = 120;
+    _fullSets = 0;
+
+    _showContents = "start";
+
+    setState(() {  });
   }
 
   selectCard(String cardName) {
     debugPrint("Select card " + cardName);
     addCardToNextAvailableSet(cardName);
+
+    _coins -= 10;
 
     setState(() {
       _set1;
@@ -37,7 +48,7 @@ class _GameState extends State<Game> {
       _set3;
     });
 
-    if (_fullSets == 3) {
+    if (_coins == 0) {
       setState(() => _showContents = "finish");
     }
   }
@@ -75,13 +86,13 @@ class _GameState extends State<Game> {
 
   Column cardsToChoose() {
     return Column(
-        children: [
-          ImageHelpers.randomPictureLink(selectCard),
-          const SizedBox(height: 10),
-          ImageHelpers.randomPictureLink(selectCard),
-          const SizedBox(height: 10),
-          ImageHelpers.randomPictureLink(selectCard)
-        ]
+      children: [
+        ImageHelpers.randomPictureLink(selectCard),
+        const SizedBox(height: 10),
+        ImageHelpers.randomPictureLink(selectCard),
+        const SizedBox(height: 10),
+        ImageHelpers.randomPictureLink(selectCard)
+      ]
     );
   }
 
@@ -89,11 +100,11 @@ class _GameState extends State<Game> {
     debugPrint("Game");
 
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          cardsToChoose(),
-          wallet()
-        ]
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        cardsToChoose(),
+        wallet()
+      ]
     );
   }
 
@@ -107,8 +118,8 @@ class _GameState extends State<Game> {
     ];
 
     return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: contents
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: contents
     );
   }
 
@@ -123,13 +134,13 @@ class _GameState extends State<Game> {
   }
 
   Widget finishPage() {
-    String result = "You completed the game!";
+    String result = "You completed $_fullSets sets!";
 
     List<Widget> children = [
       const SizedBox(height: 40),
       Text(
-          "Congratulations!!",
-          style: Widgets.celebrateTextStyle
+        "Congratulations!!",
+        style: Widgets.celebrateTextStyle
       ),
       Text(result, style: Widgets.subTextStyle),
       const SizedBox(height: 40),
@@ -146,36 +157,35 @@ class _GameState extends State<Game> {
 
   Column welcome() {
     return Column(
-        children: [
-          const SizedBox(height: 50),
-          ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
-          const SizedBox(height: 50),
-          Widgets.defaultButton(resetGame, "Start")
-        ]
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        const SizedBox(height: 50),
+        ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
+        const SizedBox(height: 50),
+        Widgets.defaultButton(resetGame, "Start"),
+        const SizedBox(height: 50)
+      ]
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("My Game")
-        ),
-        body: Center(
-          child: SizedBox(
-            width: 375,
-            child: Column(
-              children: [
-                Widgets.customAppBar(),
-                Container(
-                  color: Colors.deepPurple,
-                  constraints: const BoxConstraints(maxHeight: 580),
-                  child: pageContents()
-                )
-              ]
-            )
+      body: Center(
+        child: SizedBox(
+          width: 375,
+          child: Column(
+            children: [
+              Widgets.customAppBar(_coins),
+              Container(
+                color: Colors.deepPurple,
+                constraints: const BoxConstraints(maxHeight: 580),
+                child: pageContents()
+              )
+            ]
           )
         )
+      )
     );
   }
 }

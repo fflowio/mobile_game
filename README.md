@@ -816,11 +816,13 @@ finish page. Let's build the contents first.
 
 9.5 Finish page
 
+9.5.1 Add the finish page
+
 Near the pageContents() method, Add a new finishPage() method to congratulate the player
 
 ```
   Widget finishPage() {
-    String result = "You completed the game!";
+    String result = "You completed " + _fullSets.toString() + " sets!";
 
     List<Widget> children = [
       const SizedBox(height: 40),
@@ -841,6 +843,25 @@ Near the pageContents() method, Add a new finishPage() method to congratulate th
     );
   }
 ```
+
+9.5.2 Fix the warning
+
+Your IDE will give you a warning about using String interpolation. String interpolation syntax 
+can be a bit fiddly, but luckily, we don't need to worry about the details!
+
+Hover over the String line, the IDE will offer a helpful message, like this: 
+
+![img_6.png](img_6.png)
+
+Click on 
+
+```Replace with interpolation```
+
+And magically, your code should change to this:
+
+```String result = "You completed $_fullSets sets!";```
+
+If the IDE magic doesn't work, you can fix it by hand.
 
 9.6 Call the finish page
 
@@ -863,7 +884,55 @@ Let's fix that next.
 
 10. Coins
 
+10.1 Count coins
 
+There's already a coin widget in the navbar, but at the moment, it always says "40".
 
+Let's make it more intelligent.
 
+10.1.1 Coins variable
 
+At the top of the class, where we declare _sets and _fullSets, add a line with the coins variable
+
+```int _coins = 120;```
+
+10.1.2 Update coins
+
+Every time the user selects a card, subtract some coins. In the selectCard() method, add this:
+
+```_coins -= 10;```
+
+10.1.3 Check when the user runs out of coins
+
+Better check in case we got to zero!
+
+In the same selectCard() method, after subtracting coins, test how many are left:
+
+```
+  if (_coins == 0) {
+    setState(() => _showContents = "finish");
+  }
+```
+
+10.1.4 Remove the old fullSets check
+
+This means we don't need the fullSets check any more. It's not doing any harm, but it's always
+a good idea to remove code you don't need any more. It means there's potential for something
+to break, and it can confuse someone reading this code for the first time.
+
+Delete these lines:
+
+``` 
+  ~~
+    if (_fullSets == 3) {
+      setState(() => _showContents = "finish");
+    }
+  ~~  
+```
+
+10.1.5 Display coins
+
+Show the user how their coins are going: in the build() method at the end of the class, find
+where the customNavBar is called, and update it to coins:
+
+```Widgets.customAppBar(_coins),```
