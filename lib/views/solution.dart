@@ -164,7 +164,7 @@ class _GameState extends State<Game> {
         body: Center(
             child: Container(
                 color: Colors.deepPurple,
-                constraints: const BoxConstraints(maxWidth: 450),
+                constraints: const BoxConstraints(maxWidth: 375),
                 child: pageContents()
             )
         )

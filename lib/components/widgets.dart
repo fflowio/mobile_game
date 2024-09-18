@@ -159,7 +159,7 @@ class Widgets {
     }
 
     return Padding(
-      padding: const EdgeInsets.only(top: 7),
+      padding: const EdgeInsets.only(bottom: 7),
       child: Container(
         width: 160,
         height: 160,
