@@ -119,12 +119,10 @@ class Widgets {
   static Container imageHolder(String imageName) {
     Widget child = const Text("");
     if (imageName != "empty") {
-      child = ImageHelpers.getPicture(imageName, 75);
+      child = ImageHelpers.getPicture(imageName, 40);
     }
 
     return Container(
-      width: 76,
-      height: 76,
       decoration: BoxDecoration(
         border: Border.all(
           color: Colors.grey,
@@ -146,8 +144,9 @@ class Widgets {
       children.add(imageHolder("empty"));
     }
 
-    return GridView(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+    return GridView.count(
+      padding: EdgeInsets.zero,
+      crossAxisCount: 2,
       children: children
     );
   }
@@ -171,6 +170,19 @@ class Widgets {
         ),
         child: childrenForSet(set)
       )
+    );
+  }
+
+  static Padding customAppBar() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child:
+        AppBar(
+          title: const Text("My Game"),
+          actions: [
+            Widgets.numberIcon(40)
+          ]
+        )
     );
   }
 }

@@ -159,14 +159,22 @@ class _GameState extends State<Game> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: const Text("My Game")
+          title: const Text("My Game")
         ),
         body: Center(
-            child: Container(
-                color: Colors.deepPurple,
-                constraints: const BoxConstraints(maxWidth: 375),
-                child: pageContents()
+          child: SizedBox(
+            width: 375,
+            child: Column(
+              children: [
+                Widgets.customAppBar(),
+                Container(
+                  color: Colors.deepPurple,
+                  constraints: const BoxConstraints(maxHeight: 580),
+                  child: pageContents()
+                )
+              ]
             )
+          )
         )
     );
   }
