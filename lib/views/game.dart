@@ -18,18 +18,29 @@ class _GameState extends State<Game> {
   List<String> _set3 = [];
   List<List<String>> _sets = [];
   int _fullSets = 0;
+  int _coins = 120;
 
   void resetGame() async {
     debugPrint("Reset");
 
+    _set1 = [];
+    _set2 = [];
+    _set3 = [];
     _sets = [_set1, _set2, _set3];
 
-    setState(() => _showContents = "start");
+    _coins = 120;
+    _fullSets = 0;
+
+    _showContents = "start";
+
+    setState(() {  });
   }
 
   selectCard(String cardName) {
     debugPrint("Select card " + cardName);
     addCardToNextAvailableSet(cardName);
+
+    _coins -= 10;
 
     setState(() {
       _set1;
@@ -37,7 +48,7 @@ class _GameState extends State<Game> {
       _set3;
     });
 
-    if (_fullSets == 3) {
+    if (_coins == 0) {
       setState(() => _showContents = "finish");
     }
   }
@@ -123,7 +134,7 @@ class _GameState extends State<Game> {
   }
 
   Widget finishPage() {
-    String result = "You completed the game!";
+    String result = "You completed $_fullSets sets!";
 
     List<Widget> children = [
       const SizedBox(height: 40),
@@ -165,7 +176,7 @@ class _GameState extends State<Game> {
           width: 375,
           child: Column(
             children: [
-              Widgets.customAppBar(),
+              Widgets.customAppBar(_coins),
               Container(
                 color: Colors.deepPurple,
                 constraints: const BoxConstraints(maxHeight: 580),

@@ -116,12 +116,7 @@ class Widgets {
     return shape;
   }
 
-  static Container imageHolder(String imageName) {
-    Widget child = const Text("");
-    if (imageName != "empty") {
-      child = ImageHelpers.getPicture(imageName, 40);
-    }
-
+  static Container imageHolder(Widget child) {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -137,11 +132,13 @@ class Widgets {
     List<Widget> children = [];
 
     for (var cardPath in set) {
-      children.add(imageHolder(cardPath));
+      children.add(ImageHelpers.getPicture(cardPath, 40));
     }
 
+    // If the set is not full,
+    // add empty text content to make sure the blank holder is drawn
     for (int i = 0; i <= (4 - set.length); i++) {
-      children.add(imageHolder("empty"));
+      children.add(const Text(""));
     }
 
     return GridView.count(
