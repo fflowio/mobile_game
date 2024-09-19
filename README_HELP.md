@@ -39,7 +39,13 @@ But, we can use hex colours if there's a good reason to.
 
 The layout was chosen somewhat randomly.
 
-## Main instructions
+## Workshop instructions
+
+If you have time, please run through the
+[workshop instructions in the README](https://github.com/fflowio/mobile_game/)
+
+Then let us know what you think! There are suggestions here for the kind of help we're looking
+for.
 
 ### Mistakes
 
