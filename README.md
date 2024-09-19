@@ -66,7 +66,7 @@ They are all in the lib/ folder, as follows:
 
 You'll find out more about them in the workshop.
 
-## Run the blank project
+## 1 Run the blank project
 
 Run the project. There isn't much to see yet, that's because you will be coding it in the next steps.
 But let's just see the blank project first!
@@ -85,9 +85,14 @@ In Android Studio, at the top of the screen, in the middle you'll see some menus
 
 #### 1.1 Run the game (Android Studio)
 
+If you have an emulator device, or have connected a physical device, use them. 
+
+If you don't have either of these, use the first option: Chrome (web), and you'll run this lab
+in a browser.
+
    Select run options
 
-      Chrome(web) in the first menu
+      Chrome(web) in the first menu [or your device, if you have one]
       main.dart in the second menu 
 
    Run
@@ -311,7 +316,7 @@ Time to get the game started!
 At the moment, the game always shows welcome page. Let's change it to return a 
 game page when the user starts playing.
 
-4.2.1 Add pageContents() 
+### 4.2.1 Add pageContents() 
 
 Add a new method:
 
@@ -415,10 +420,9 @@ But debug shows you did call it, and there must be a different problem.
 You don't only want to the change the value of _showContents, you also want to redraw the page 
 contents. In flutter, the way to get the page to redraw is to change the state. 
 
-Change the line you just added in resetGame(), so that it sets the value of _showContents not just 
-as a variable, but also in the app state, like this:
+At the end of resetGame(), add a call to set the state:
 
-```setState(() => _showContents = "start");```
+``` setState(() {  });```
 
 ## 4.7 Does it work?
 
@@ -561,14 +565,14 @@ full or empty:
 
 ```
 bool cardCanGoInSet(String cardName, List<String> set) {
-  if (set.isEmpty) {
-    return true;
-  } else if (set.length == 4) {
+  if (set.length == 4) {
     return false;
+  } else if (set.isEmpty) {
+    return true;
   } else {
     debugPrint("Set has 1 or more cards");
     return false;
-  }  
+  }
 }  
 ```
 
@@ -578,7 +582,7 @@ Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and sele
 
 ```
   addCardToNextAvailableSet(String cardName) {
-    //debugPrint(cardName);
+    debugPrint(cardName);
     if (cardCanGoInSet(cardName, _set1)) {
       _set1.add(cardName);
     } else if (cardCanGoInSet(cardName, _set2)) {
@@ -683,13 +687,9 @@ them when it redraws.
 You could add this in the addCardToNextAvailableSet() method. But that one is going to get
 pretty full of logic so to keep it a bit easier to read, we'll add it to the place that calls it.
 
-In selectCard(), under addCardToNextAvailableSet(), add this:
+In selectCard(), under addCardToNextAvailableSet(), add this call to setState:
 
-    setState(() {
-      _set1;
-      _set2;
-      _set3;
-    });
+    setState(() { });
 
 ### 7.5 Is it working?
 
@@ -700,9 +700,9 @@ Now the wallet updates with the cards from the set! It should look something lik
 It's working, but, because we only added logic to add the first card to any set, they only 
 ever have one. Go back to the set logic to add cards 2, 3, and 4
 
-8 More set logic
+## 8 More set logic
 
-8.1 Just add them all
+### 8.1 Add them all
 
 In cardCanGoInSet() method, in the last else statement, there's a debug and you return false, 
 which means you don't allow the card to go in the set.
@@ -715,11 +715,11 @@ Now you can fill up the sets to get to 4, but ... they aren't matching sets.
 
 You need more logic to make sure they match.
 
-8.2 Card category match
+### 8.2 Test the category
 
 In order to belong in a set, a card needs to be from the same category.
 
-Add a new categoryMatch() method near the selectCard() method
+Add a new categoryMatch() method near the cardCanGoInSet() method
 
 ```
 bool categoryMatch(existingCard, newCard) {
@@ -727,52 +727,59 @@ bool categoryMatch(existingCard, newCard) {
 }
 ```
 
-If you want to understand how this method works in more detail, add debug. For example:
+Our cards have a category as part of their name, and this line tests if the name parts are equal.
+To understand how this method works in more detail, add debug. For example:
 
 ```debugPrint(existingCard.substring(14, 21));```
 
-8.3 Call the card category match
+### 8.3 Call the card category match
 
-In the cardCanGoInSet() method, inside the last else statement, test the category to make the 
-decision about whether to return true or false. Add this:
+In the cardCanGoInSet() method, add an 'else if' statement, which uses the categoryMatch() test to 
+find out if this card fits int he set. The whole method ends up like this:
 
 ```
-      if (categoryMatch(set[0], cardName)) {
-        return true;
-      } else {
-        return false;
-      }  
+  if (set.length == 4) {
+    return false;
+  } else if (set.isEmpty) {
+    return true;
+  } else if (categoryMatch(set[0], cardName)) {
+    return true;
+  } else {
+    debugPrint("Set has 1 or more cards");
+    return false;
+  }
 ```
 
-8.4 Does it work?
+### 8.4 Does it work?
 
 Now, the card you select should only join a set if it matches. And you should be able to fill up
 all the sets, like this!
 
 ![img_5.png](img_5.png)
 
-9.0 Winning
+## 9.0 Ending the game
 
-But wait, the game never ends. It just keeps trying to add cards, and noping out, because all the
-sets are full.
+But wait, the game never ends! It keeps trying to add cards, and continues without adding, because 
+all the sets are full.
 
-9.1 Too many sets
+### 9.1 Refactor sets
 
-The logic we're about to add applies to all the sets. If you look in the addCardToNextAvailableSet()
-method, it's already got some if statements that basically do the same thing for each set. Those
-statements are about to get longer, and it's starting to look messy.
+We're about to add some logic to all the sets. 
 
-Instead, we'll make a minor refactor and keep track of all the sets together.
+In the addCardToNextAvailableSet(), there are 'if' statements that basically do the same thing for 
+each set. It's starting to look messy, and we want to make the contents of the 'if' longer.
 
-9.1.1 List of Lists
+Instead, first, we'll make a minor refactor and keep track of all the sets together.
 
-When you have a list, captured between square brackets: [ a, b, c ]
+#### 9.1.1 List of Lists
+
+When you have a list, captured between square brackets: [a, b, c]
 
 It turns out, you can use a list inside a list, like this: [[a,b,c], [b,c,d], [f,g,h]]
 
 We're going to do this with our sets.
 
-9.1.2 Add a sets list
+### 9.1.2 Add a sets list
 
 At the top of the GameState class, add a new sets list near the other sets 
 
@@ -786,19 +793,27 @@ You can try changing the line you just added:
 
 Basically, it just means it's too soon to add those contents.
 
-Go back to the first version.
+Back up to the first attempt:
 
-9.1.3 Add the sets to the bigger list.
+```List<List<String>> _sets = [];```
+
+### 9.1.3 Add the sets to the bigger list.
 
 Instead, set up the sets when we reset the game
 
-Add this line into resetGame()
+Add this content into resetGame():
 
-```_sets = [_set1, _set2, _set3];```
+```
+  _set1 = [];
+  _set2 = [];
+  _set3 = [];
+  _sets = [_set1, _set2, _set3];
+```
 
-9.2 For loop
+## 9.2 For loop
 
-In the addCardToNextAvailableSet() method, use a for loop instead of checking each set specifically.
+In the addCardToNextAvailableSet() method, now we can use a for loop instead of checking each set 
+separately.
 
 Change the contents of the method to this:
 
@@ -811,16 +826,17 @@ Change the contents of the method to this:
     }
 ```    
 
-9.2.1 Does it work?
+#### 9.2.1 Does it work?
 
 With any refactor, even a minor one, check everything still works the same way it did before.
 
-9.3 fullSets variable
+### 9.3 Track full sets
+
+Next, keep track of when the sets are full.
 
 Near the _set variables at the top of the class, add a new private fullSets variable
 
 ```int _fullSets = 0;```
-
 
 In the addCardToNextAvailableSet() method, if you just added the 4th card, update the full set count
 
@@ -832,18 +848,25 @@ Under set.add(cardName, add this:
       }
 ```
 
-9.4 When are all the sets full?
+#### 9.3.1 When are all the sets full?
 
 In the selectCard() method, at the end, check if the sets are full, and if they are, change 
 to the finish page (which doesn't exist yet, but we'll get to that)
 
 ```
     if (_fullSets == 3) {
-      setState(() => _showContents = "finish");
+      _showContents = "finish";
     }
 ```
 
-9.4.1 Does it work?
+
+#### 9.3.2 Reset fullSets
+
+When the game resets, also set _fullSets back to zero. Add this line in resetGame():
+
+```_fullSets = 0;```
+
+##== 9.3.3 Does it work?
 
 Sort of.
 
@@ -856,9 +879,9 @@ Look at the logic in pageContents()
 It only ever calls either the game page or the welcome page. You need to update it to call a 
 finish page. Let's build the contents first.
 
-9.5 Finish page
+### 9.4 Finish page
 
-9.5.1 Add the finish page
+#### 9.4.1 Add the finish page
 
 Near the pageContents() method, Add a new finishPage() method to congratulate the player
 
@@ -886,7 +909,9 @@ Near the pageContents() method, Add a new finishPage() method to congratulate th
   }
 ```
 
-9.5.2 Fix the warning
+#### 9.4.2 Fix the warning
+
+You'll see an interpolation warning about the line that starts 'String result'
 
 Do you remember using the IDE to help fix the interpolation warning?
 
@@ -894,16 +919,22 @@ Use the same trick again, and your code should change to this:
 
 ```String result = "You completed $_fullSets sets!";```
 
-9.6 Call the finish page
+### 9.5 Call the finish page
 
-In the pageContents() method, between the top if and the bottom else, add an else-if test, like this:
+In the pageContents() method, between the top if and the bottom else, add an 'else if' test, and set
+it to call finishPage. You should end up with the whole method looking like this:
 
 ```
+    if (_showContents == "start") {
+      return gamePage();
     } else if (_showContents == "finish") {
       return finishPage();
+    } else {
+      return welcome();
+    }
 ```
 
-9.6.1 Does it work?
+### 9.6 Does it work?
 
 Run the game through, do you get to the new finish page?
 
@@ -913,27 +944,33 @@ But at the moment, every player will win, every time.
 
 Let's fix that next.
 
-10. Coins
+## 10. Coin logic
 
-10.1 Count coins
+### 10.1 Count coins
 
 There's already a coin widget in the navbar, but at the moment, it always says "40".
 
 Let's make it more intelligent.
 
-10.1.1 Coins variable
+#### 10.1.1 Coins variable
 
 At the top of the class, where we declare _sets and _fullSets, add a line with the coins variable
 
 ```int _coins = 120;```
 
-10.1.2 Update coins
+### Reset coins
+
+When the game starts, reset the coins value. In resetGame(), add this line:
+
+```_coins = 120;```
+
+#### 10.1.2 Update coins
 
 Every time the user selects a card, subtract some coins. In the selectCard() method, add this:
 
 ```_coins -= 10;```
 
-10.1.3 Check when the user runs out of coins
+#### 10.1.3 Check when the user runs out of coins
 
 Better check in case we got to zero!
 
@@ -941,11 +978,11 @@ In the same selectCard() method, after subtracting coins, test how many are left
 
 ```
   if (_coins == 0) {
-    setState(() => _showContents = "finish");
+    _showContents = "finish";
   }
 ```
 
-10.1.4 Remove the old fullSets check
+#### 10.1.4 Remove the old fullSets check
 
 This means we don't need the fullSets check any more. It's not doing any harm, but it's always
 a good idea to remove code you don't need any more. It means there's potential for something
@@ -956,14 +993,112 @@ Delete these lines:
 ``` 
   ~~
     if (_fullSets == 3) {
-      setState(() => _showContents = "finish");
+      _showContents = "finish";
     }
   ~~  
 ```
 
-10.1.5 Display coins
+#### 10.1.5 Display coins
 
 Show the user how their coins are going: in the build() method at the end of the class, find
-where the customNavBar is called, and update it to coins:
+where the customAppBar is called, and update it to send the coins, it should end up like this:
 
-```Widgets.customAppBar(_coins),```
+```Widgets.customAppBar(Game.name, _coins),```
+
+### 10.2 Does it work?
+
+It should all look something like this:
+
+![img_12.png](img_12.png)
+
+Make sure that when you get to the end, you can restart the game.
+
+Congratulations!! You have completed the lab.
+
+# Stretch goals
+
+## 11 Make the card logic more interesting
+
+If you look in /assets/images the image names look like this:
+
+JourneyAmico.svg
+JourneyBro.svg
+...
+RollersAmico.svg
+RollersBro.svg
+
+This means, we can match based on type (Amico, Bro), as well as the category (Journey, Rollers)
+
+### 11.1 Add a typeMatch test
+
+Near the categoryMatch method, add this:
+
+```
+bool typeMatch(setCard, newCard) {
+  return setCard.substring(21, 24) == newCard.substring(21, 24);
+}
+```
+### 11.2 Improve the card matching logic
+
+In the cardCanGoInSet() method, you need a lot more logic.
+
+What happens if there is one card in the set?
+
+What happens if there are two or three cards in the set?
+
+How do you know if a set was a category set or a type set?
+
+Try and work it out yourself before you read on....
+
+### 11.3 Possible solution
+
+Here's my solution:
+
+```    
+    if (set.length == 4) {
+      return false;
+    } else if (set.isEmpty) {
+      return true;
+    } else if (set.length == 1)  {
+      if (categoryMatch(set[0], cardName)) {
+        return true;
+      } else if (typeMatch(set[0], cardName)) {
+        return true;
+      }
+    } else if (categoryMatch(set[0], set[1])) {
+      if(categoryMatch(set[0], cardName)) {
+        return true;
+      }
+    } else if (typeMatch(set[0], set[1])) {
+      if(typeMatch(set[0], cardName)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+```
+
+It works, but it feels inefficient. 
+
+### 11.3 Does it work?
+
+Play the game. Can you get to the end? What has changed?
+
+## 12 More ideas
+
+## 12.1 Improvements
+
+What ideas do you have to improve this game? How would you change the styling? Would you 
+draw your own images?
+
+## 12.2 Go big
+
+What would you build if you were designing a new game?
+
+Or would you build an app that does something useful?
+
+Here are some [other projects](https://www.geeksforgeeks.org/flutter-projects-with-source-code/) 
+that might give you ideas
+
+
