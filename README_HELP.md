@@ -6,6 +6,10 @@ We need your help! Please try it out and tell us what you think.
 
 Here is more information about things you can help with.
 
+Also, for design help, you don't need to run the workshop - unless you want to. 
+
+Here's a [YouTube video](https://www.youtube.com/shorts/DWAhWEiNqZk) showing what you would build.
+
 ## Designs
 
 The design work so far has been basic, and mostly done by a developer. Please suggest improvements
@@ -98,15 +102,16 @@ Do you have any instructions that you think are beginner-friendly? Especially fo
 
 Email to info@fflow.io
 
-### Github
+### Github discussion
 
 Add your thoughts to any
 [discussion](https://github.com/fflowio/mobile_game/discussions/categories/ideas)
 
-### PR
+### Github PR
 
 Familiar with github, and have a specific fix ready to go? Submit a PR, we'll take a look
 
+### LinkedIn
 
-
+Find Sarah on [LinkedIn](https://www.linkedin.com/in/s-eggleston/)
 
