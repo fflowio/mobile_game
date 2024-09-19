@@ -204,8 +204,7 @@ happening to other developers. Comments are also useful to remove some code temp
 
 What happened when you commented the color line?
 
-Keep it commented for now, so that the page is plain black. We're about to start putting content on 
-the page, and a black background will work well. You'll have a chance to add colours back later on.
+Turn it back to purple or your favourite colour.
 
 ## 3. Welcome
 
@@ -217,7 +216,7 @@ Edit the welcome method to show a welcome page
 
 Delete this line:
 
-```return Container();```
+```~~return Container();~~```
 
 #### 3.1.2 Add the new welcome contents
 
@@ -424,10 +423,18 @@ as a variable, but also in the app state, like this:
 ## 4.7 Does it work?
 
 Click the Start button again. Now it should work, and you see the "Game contents go here" text.
+Like this:
 
-In the rest of this workshop, when you call a method, if it doesn't exist, you get
-an error. But here, there's no error, and it just starts working. But you haven't written
-a setState() method. How does this happen?
+![img_10.png](img_10.png)
+
+Ooops, the page is a bit short. Never mind, the contents are only temporary, we'll fix it when we 
+build out the real thing.
+
+### 4.8 Inheritance
+
+So far in this workshop, when you call a method, if it doesn't exist, you get an error. But here, 
+there's no error, and it just starts working. But you haven't written a setState() method. How does 
+this happen?
 
 Look at the top of the class, it looks like this:
 
@@ -436,23 +443,28 @@ Look at the top of the class, it looks like this:
 The State class you are extending includes the setState() method, which is why you don't need to 
 build it. Someone else already wrote it!
 
-It's called inheritance - you inherited the setState method from the parent State class.
+It's called inheritance: you inherited the setState method from the parent State class.
 
-This is why inheritance is so powerful. It means you can reuse your own or someone else's code.
+Inheritance is powerful. It means you can reuse your own or someone else's code, without having to
+care how the insides work.
 
-5. Game page
+## 5. Game page
 
-Let's get some contents in the game page.
+Let's add some contents in the game page.
 
-5.1 cards to choose
+### 5.1 Cards to choose from
 
-5.1.1 Call cardsToChoose
+The game invites the user to pick a card. So let's give them some cards to choose from.
 
-In the pageContents() method, change the Text line to call cardsToChoose()
+In the gamePage() method, delete the Text line:
+
+```~~Text("Game contents go here")~~```
+
+change the Text line to call cardsToChoose()
 
     ```cardsToChoose()```
 
-5.1.2 Implement cardsToChoose
+#### 5.1.2 Add cardsToChoose method
 
   Near the pageContents() method, add a new cardsToChoose() method
 
@@ -470,13 +482,13 @@ In the pageContents() method, change the Text line to call cardsToChoose()
   }
 
 ```
-Oops, the errors are just getting worse! You fixed the cardsToChoose() error, but now there are
+Shame, the errors are just getting worse! You fixed the cardsToChoose() error, but now there are
 three selectCard errors instead. 
 
 Take a quick look in the image_helpers.dart file at the randomPictureLink method. A helpful
 comment at the top says you need to provide a selectCard method. You'd better do that now!
 
-5.2 selectCard
+### 5.2 selectCard
 
 Add the selectCard() method now, near the cardsToChoose() method
 
@@ -486,7 +498,7 @@ selectCard(String cardName) {
 }
 ```
 
-5.2.1 Fix the warning
+### 5.3 Fix the warning
 
 Your IDE will give you a warning about using String interpolation. String interpolation syntax
 can be a bit fiddly, but luckily, we don't need to worry about the details!
@@ -505,32 +517,28 @@ Once it's fixed, it should look like this:
 
 If the IDE magic doesn't work, you can fix it by hand.
 
-5.3 Does it work?
+### 5.4 Does it work?
 
-Your app should look like this now!
+Click on the start button. Your app should look like this now!
 
-![img_3.png](img_3.png)
+![img_11.png](img_11.png)
 
-Remember the image generator is random, so your images will be different. But the layout should
-be the same as this screenshot.
+Remember, the image generator code is random, so your images will be different. But the layout 
+should be the same as this screenshot.
 
-Look in the run tab for helpful debug, you should see a message like this:
+The images are all provided in the assets/images folder. Thanks and credits to https://storyset.com
 
-"Select card assets/images/ImageName.svg"
+## 6. Game logic
 
-The images are all in the assets/images folder. Thanks and credits to https://storyset.com
+### 6.1 Sets
 
-6. Game logic
+The game is to build sets of matching cards.
 
-6.1 Sets
-
-The game player is trying to build sets of matching cards.
-
-Configure the sets where they will be stored
+Configure the sets where the code will store them.
 
 Like _showContents, they need to be private, and shared with all the methods in the class.
 
-6.1.1 Set variables
+### 6.1.1 Set variables
 
 Add these sets near the _showContents variable, at the top of the _GameState class
 
@@ -540,17 +548,16 @@ List<String> _set2 = [];
 List<String> _set3 = [];
 ```
 
-6.2 Set logic
-
-Add a new cardCanGoInSet() method near the categoryMatch() and selectCard() methods.
+## 6.2 Initial set logic
 
 The images we're using come in sets of 4, so a set in the game will have a maximum size of 4.
-
-6.2.1 Can you add a card to a set?
 
 Let's start with the basics: if the set size is 0, the new card can go in it. If it's 4, the new
 card can't. If it has 1,2, or 3 cards, you need some more logic, which you'll add soon. For now,
 just add a debug statement.
+
+Add a new cardCanGoInSet() method near the selectCard() method, that works out whether a set is 
+full or empty:
 
 ```
 bool cardCanGoInSet(String cardName, List<String> set) {
@@ -565,9 +572,7 @@ bool cardCanGoInSet(String cardName, List<String> set) {
 }  
 ```
 
-6.3 More set logic
-
-6.2.1 Add card to next available set
+## 6.3 More set logic
 
 Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and selectCard() methods.
 
@@ -586,21 +591,22 @@ Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and sele
   }
 ```
 
-6.2.2 Call the new method
+## 6.4 Call the new logic
 
 In the selectCard() method, add this line:
 
   ```addCardToNextAvailableSet(cardName);```
 
-This might be working now, but you can't really tell. You could start by adding debugPrint to check, 
-or just skip on and start to display the sets:
+This might be working now, but you can't really tell. You could add debugPrint to check, 
+or just skip on and start to display the sets. Then you'll find out pretty quickly what is
+and isn't working.
 
-7. Wallet
+## 7. Wallet
 
-7.1 Wallet contents
+### 7.1 Wallet contents
 
-The app currently only uses the left-hand side of the view. This means we can add the wallet in the
-right-hand side.
+The app currently shows cards in the left-hand side of the view. This means we can add the wallet 
+in the right-hand side.
 
 Near the gamePage() method, add a new method that shows the set contents
 
@@ -623,9 +629,7 @@ Column wallet() {
 
 ### 7.2 Call the wallet
 
-Call the new wallet() method from the gamePage() method, 
-
-#### 7.2.1 What's with all these commas?
+What's with all these commas?
 
 You're using commas quite a bit in this workshop, and here's a mini explanation.
 
@@ -662,9 +666,11 @@ Add a comma after cardsToChoose(), and then this line:
 
 ```wallet()```
 
-7.3 Set state
+Click on a card
 
-The wallet code is working, you can see it shows a grid where the cards will be added, so it's
+### 7.3 Is it working?
+
+The wallet code is working, you can see it shows grey boxes where the cards will be added, so it's
 getting called. But it's not displaying the cards from the set contents. Why not?
 
 It's the state problem again!
@@ -672,7 +678,7 @@ It's the state problem again!
 After you update the sets, you need to update them in the widget state, so it knows to include 
 them when it redraws.
 
-7.3.1 Set state
+### 7.4 Set state
 
 You could add this in the addCardToNextAvailableSet() method. But that one is going to get
 pretty full of logic so to keep it a bit easier to read, we'll add it to the place that calls it.
@@ -685,7 +691,7 @@ In selectCard(), under addCardToNextAvailableSet(), add this:
       _set3;
     });
 
-7.4 Test the wallet
+### 7.5 Is it working?
 
 Now the wallet updates with the cards from the set! It should look something like this:
 
