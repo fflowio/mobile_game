@@ -38,7 +38,7 @@ single file, it would look even messier.
 
 Developers tidy and structure their code by splitting it up. It's a bit like writing a book, or
 even a series of books. There's no absolute rule about where and how to split up your code, but
-it's roughly like this:
+in my head, it goes a bit like this:
 
 | Code                | Literature   |
 | ------------------- | ----------   |
