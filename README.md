@@ -146,11 +146,10 @@ and
 Widget build(BuildContext context) {
 ```
 
-@override means there's code inherited from flutter that does things for you, for example the
-AppBar.
+@override means there's code inherited from flutter that does things for you: and you can 
+choose to change them if you don't like the defaults.
 
-All your code will be written in this file, lib/views/game.dart. These instructions will tell you 
-where to make your changes.
+All your code will be written in this file, lib/views/game.dart.
 
 Let's get started.
 
@@ -168,15 +167,13 @@ Find this line in the Game class. It's global, so it's not inside any method:
 
 #### 2.1.1 Change "My Game" to your chosen name for the game
 
-As soon as you save, you should see the browser now shows your chosen name.
-
-Congratulations, you've just written your first line of code!
+The browser now shows your chosen name in two places!
 
 ### 2.2 Background color
 
 Choose a background color for your game
 
-Find this line in the game() method:
+Find this line in the build() method:
 
 ```
 color: Colors.deepPurple,
@@ -192,7 +189,7 @@ colours it knows about.
 Try a few different colours.
 
 This app is in dark mode, which means it has white text, so it's best to use a dark 
-background. It's a bit hard to see white on white!
+background. It's impossible to see white text on a white background.
 
 ### 2.3 Comments
 
@@ -212,47 +209,33 @@ the page, and a black background will work well. You'll have a chance to add col
 
 ## 3. Welcome
 
-Let's start with a welcome page. 
+Edit the welcome method to show a welcome page
 
-### 3.1 New welcome method
+### 3.1 welcome method
 
-#### 3.1.1 Add the new method
+#### 3.1.1 Remove the old welcome contents
 
-Add this new method inside the _GameState class
+Delete this line:
+
+```return Container();```
+
+#### 3.1.2 Add the new welcome contents
+
+Inside the welcome() method, where the Container used to be, add this code:
 
 ```  
-  Column welcome() {
-    return Column(
-      children: [
-        const SizedBox(height: 50),
-        ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
-        const SizedBox(height: 50)
-      ]
-    );
-  }
+  return Column(
+    children: [
+      const SizedBox(height: 50),
+      ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
+      const SizedBox(height: 50)
+    ]
+  );
 ```
-
-You'll see that nothing changes in the screen. Why not? Because, in order to run the code in a 
-method, you need to call it.
-
-It needs to be part of the contents of the Container in the game() method, and flutter does this
-with the child keyword, which you will use in the code below.
-
-### 3.2 Call the new method
-
-Look in the game() method, it returns a Container. 
-
-   3.2 Edit the previous line:
-    ```constraints: const BoxConstraints(maxWidth: 450)```
-   add a comma at the end so it looks like this:
-   ```constraints: const BoxConstraints(maxWidth: 450),```
-
-   3.3 Add this new line below the comma:
-   ```child: welcome()```
 
 The result should look like this!
 
-![img_2.png](img_2.png)
+![img_9.png](img_9.png)
 
 ## 4. Start playing
 
@@ -260,93 +243,74 @@ The app needs a button to get the game started.
 
 In the welcome() method you just created
 
-4.1 Add a start button
+### 4.1 Add a start button
 
-4.1.1 What's with all these commas?
+#### 4.1.2 Add a comma
 
-You're using commas quite a bit in this workshop, and here's a mini explanation. 
-
-Use square brackets to identify the contents of the list. 
-
-Many programming languages use the square brackets, and most of them call it an Array, in flutter
-and dart it's called it a List.
-
-[a, b, c, d]
-
-To add another entry in the list, you could do this:
-
-[a, b, c, d, e]
-
-Or, when the contents get a bit longer, and to help see where each entry starts, you can split 
-the contents over different lines:
-
-[
-  apple,
-  banana,
-  cherry,
-  dinosaur,
-  elephant
-]
-
-Which is what happens with the code in this workshop! Let's do it now.
-
-4.1.2 Add a comma
-
-Add a comma to the last SizedBox in the welcome method, like this:
+Add a comma to the last SizedBox in the welcome method, so it looks the same as the first SizedBox,
+like this:
 
 ```const SizedBox(height: 50),```
 
-If you look around, you'll see it's in a list of things inside square brackets [ ]
+#### 4.1.3 Add the start button
 
-4.1.3 Add a start button
+Below the comma, add this line:
 
 ```Widgets.defaultButton(resetGame, "Start")```
 
 Your IDE will show up with an error immediately! Why? What have you done?
 
-You've told the app to add a button with a label "Start", and when you press it, it calls a method
+You've told the app to add a button with a label "Start", and when you press it, it will call a method
 "resetGame". But there is no resetGame method, or not yet! Add it now.
 
-4.1.4 Add reset game method
+### 4.1.4 Reset game method
 
-A new method goes inside the _GameState class, but outside any other methods. It's a good idea to
-put an empty line above and below every new method, so you can see where it starts and finishes.
+This new method goes inside the _GameState class, but outside any other methods. 
 
-The order of methods doesn't matter, but it helps to keep related methods nearer to each other.
-When these instructions say "near", add the new code above or below the nearby method.
+It's a good idea to put an empty line above and below every new method, so you can see where it 
+starts and finishes.
 
-Add this near the game() method.
+The order of methods doesn't matter, but it helps to keep related methods nearer to each other,
+mainly so that you or another coder can find them easily.
+
+When these instructions say "near", you can add the new code either above or below the nearby method.
+
+Add this new method near the welcome() method.
 
 ```
 void resetGame() async {
   debugPrint("Reset");
 }
 ```
-This fixes the error, and you should have a green Start button now. What happens when you press it?
+This fixes the error, and you have a green Start button now! What happens when you press it?
 
 4.1.5 Debug
 
-Look at the foot of your screen, in the console. In Android Studio, make sure it's on the Run tab
+Look at the foot of your screen, in the console. 
+
+In Android Studio, select the Run tab
+
 (TODO VS Code)
 
 The method doesn't do anything yet - but you know it's working, because in the Run console, you 
 see the word Reset.
 
-That's because you added a line of debug, using the flutter call debugPrint. 
+That's because you added a line of debug, using the flutter method debugPrint(). 
 
 Developers use debug to work out what's going on in their code, and what's going wrong. Typically,
-you turn off debug statements for production users. But at the moment, you're the only person seeing
-this code, and debug statements are useful. 
+you turn off debug statements when you get into production. But at the moment, you're the only 
+person seeing this code, and debug statements are useful for you to work out what's working,
+and what isn't. 
 
-We'll add a couple more in the workshop. Also, any time something doesn't work, you can add your
-own debugPrint output.
+Any time something doesn't work, add your own debugPrint output, and see if you can work
+out what's happening!
 
-4.2 Start the game
+## 4.2 Start the game
 
 Time to get the game started!
 
-At the moment, the game() method always returns the welcome page. Let's change it to return the 
-game page when the user starts it.
+At the moment, the game always shows welcome page. Let's change it to return a 
+game page when the user starts playing.
 
 4.2.1 Add pageContents() 
 
@@ -362,49 +326,17 @@ Add a new method:
   } 
 ```
 
-The IDE will show two errors now! Can you guess why?
+The IDE shows two errors now! Can you guess why?
 
 Your code mentions two new things, _showContents, and gamePage(), and they don't exist yet. You 
 will add them next.
 
 By the way, it's absolutely normal to see errors while you work on code. They look scary, especially
-if they are bright red. This workshop shows you some on purpose so that you get used to them. And
-the debugPrint you have already seen is a useful way to work out what's wrong.
+if they are bright red. This workshop shows you some on purpose so that you get used to them.
 
-4.2.2 Call the new pageContents() method
+### 4.3 Add gamePage()
 
-In the build() method, change the Container child so it returns pageContents() instead of welcome(),
-like this:
-
-```child: pageContents()```
-
-The page contents don't actually change yet, because you haven't change the value of _showContents.
-You'll do that next.
-
-4.3 Manage _showContents
-
-Flutter uses _ to mark something as private. The app already has one private method, _GameState. 
-Private just means you can only call it from inside the same class. 
-
-We use private methods and variables to stop data from leaking into other bits of the app.
-
-Although this showContents is a private variable, we want to use it in several different methods
-in this class. If you declare a variable inside a method, only that method can use it. 
-
-We want to use showContents in several methods, so it needs to be declared outside all of them.
-
-By convention, we add class-wide variables at the top of the class, so anyone new to the class will
-see them quickly.
-
-At the top of the (private) _GameState class, above all the methods, add this line:
-
-```String _showContents = "welcome";```
-
-This should fix one error, but there's still one more.
-
-4.4 Add gamePage()
-
-Add the gamePage method near the pageContents and welcome methods, like this:
+Add a gamePage method near the pageContents and welcome methods, like this:
 
 ```
 Row gamePage() {
@@ -419,10 +351,41 @@ Row gamePage() {
 }
 ```
 
+This should fix one of the errors, but there's still one more.
+
+### 4.4 Add _showContents
+
+Flutter uses _ to mark something as private. The app already has one private method, _GameState.
+Private just means you can only call it from inside the same class.
+
+We use private methods and variables to stop data from leaking into other bits of the app.
+
+Although this showContents is a private variable, we want to use it in several different methods
+in this class. If you declare a variable inside a method, only that method can use it.
+
+We want to use showContents in several methods, so it needs to be declared outside all of them.
+
+By convention, we add class-wide variables at the top of the class, so anyone new to the class will
+see them quickly.
+
+At the top of the (private) _GameState class, above all the methods, add this line:
+
+```String _showContents = "welcome";```
+
 All the errors should be fixed, but there are still warnings. Ignore them for now, you will fix
 them soon.
 
-4.5 _showContents logic
+### 4.5 Call pageContents
+
+In the build() method, change the Container child so it returns pageContents() instead of welcome(),
+like this:
+
+```child: pageContents()```
+
+The page contents don't actually change yet, because you haven't change the value of _showContents.
+Do this next.
+
+### 4.6 _showContents logic
 
 You have code for two different bits of content: gamePage() and welcome(). But at the moment,
 you can still only see the welcome page. Which is nice, but it would be handy to see the game
@@ -432,13 +395,13 @@ How do you fix this?
 
 First, let's try changing the value of _showContents
 
-4.5.1 Change _showContents 
+#### 4.6.1 Change _showContents 
 
 In the resetGame() method, add this line at the bottom:
 
 ```_showContents = "start";```
 
-But... nothing happens!
+But... still nothing happens!
 
 What has gone wrong?
 
@@ -448,17 +411,17 @@ reason code isn't working is simply that you are not calling it.)
 
 But debug shows you did call it, and there must be a different problem. 
 
-4.5.2 Set _showContents in state
+### 4.6.2 Set _showContents in state
 
-You don't just want to the change the value of _showContents, you also want to redraw the page 
+You don't only want to the change the value of _showContents, you also want to redraw the page 
 contents. In flutter, the way to get the page to redraw is to change the state. 
 
-Change the line you just added so that it sets the value of _showContents not just as a variable, but also in 
-the app state, like this:
+Change the line you just added in resetGame(), so that it sets the value of _showContents not just 
+as a variable, but also in the app state, like this:
 
 ```setState(() => _showContents = "start");```
 
-4.5.3 Does it work?
+## 4.7 Does it work?
 
 Click the Start button again. Now it should work, and you see the "Game contents go here" text.
 
@@ -471,7 +434,7 @@ Look at the top of the class, it looks like this:
 ```class _GameState extends State<Game> {```
 
 The State class you are extending includes the setState() method, which is why you don't need to 
-build it. Someone else already built and supplied it to us!
+build it. Someone else already wrote it!
 
 It's called inheritance - you inherited the setState method from the parent State class.
 
@@ -658,9 +621,42 @@ Column wallet() {
 }
 ```
 
-7.2 Call the wallet
+### 7.2 Call the wallet
 
 Call the new wallet() method from the gamePage() method, 
+
+#### 7.2.1 What's with all these commas?
+
+You're using commas quite a bit in this workshop, and here's a mini explanation.
+
+Many programming languages use square brackets to mark the beginning and end of a list, and most 
+of them call it an Array. 
+
+In flutter and dart it's called it a List. Like this:
+
+[a, b, c, d]
+
+When you want to add a new entry in the array, you add a comma to separate it from the entry before.
+Like this:
+
+[a, b, c, d, e]
+
+If the contents are a bit longer, for example:
+
+[apple, banana, cherry, dinosaur]
+
+To help see where each entry starts, you can choose to split the contents over different lines. 
+This just makes it easier to see where each entry starts. It doesn't affect how the List works.
+
+[
+  apple,
+  banana,
+  cherry,
+  dinosaur,
+  elephant
+]
+
+We use this style for the code in this workshop! Let's add a comma and element.
 
 Add a comma after cardsToChoose(), and then this line:
 
