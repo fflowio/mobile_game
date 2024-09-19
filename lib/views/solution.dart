@@ -95,8 +95,6 @@ class _GameState extends State<Game> {
   }
 
   Row gamePage() {
-    debugPrint("Game");
-
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -131,7 +129,7 @@ class _GameState extends State<Game> {
   }
 
   selectCard(String cardName) {
-    debugPrint("Select card $cardName");
+    //debugPrint("Select card $cardName");
     addCardToNextAvailableSet(cardName);
     _coins -= 10;
 
