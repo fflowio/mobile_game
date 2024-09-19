@@ -69,10 +69,6 @@ class Widgets {
     );
   }
 
-  static onWidgetPressed() {
-    debugPrint("Widget pressed");
-  }
-
   static ElevatedButton numberIcon(int coins) {
     const currencyCharacter = "\u20b5";
     var textString = "$currencyCharacter$coins";
@@ -132,13 +128,17 @@ class Widgets {
     List<Widget> children = [];
 
     for (var cardPath in set) {
-      children.add(ImageHelpers.getPicture(cardPath, 40));
+      Widget picture = ImageHelpers.getPicture(cardPath, 40);
+      Container picHolder = imageHolder(picture);
+      children.add(picHolder);
     }
 
     // If the set is not full,
     // add empty text content to make sure the blank holder is drawn
     for (int i = 0; i <= (4 - set.length); i++) {
-      children.add(const Text(""));
+      Widget emptyContents = const Text("");
+      Container emptyHolder = imageHolder(emptyContents);
+      children.add(emptyHolder);
     }
 
     return GridView.count(
