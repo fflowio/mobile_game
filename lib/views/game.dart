@@ -7,11 +7,18 @@ import 'credits.dart';
 class Game extends StatefulWidget {
   const Game({super.key});
 
+  static var name = "My Game";
+
   @override
   State<Game> createState() => _GameState();
 }
 
 class _GameState extends State<Game> {
+
+  Widget welcome() {
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +27,11 @@ class _GameState extends State<Game> {
           width: 375,
           child: Column(
             children: [
-              Widgets.customAppBar("My game", 40),
+              Widgets.customAppBar(Game.name, 40),
               Container(
                 color: Colors.deepPurple,
-                constraints: const BoxConstraints(maxHeight: 580)
+                constraints: const BoxConstraints(maxHeight: 580),
+                child: welcome()
               )
             ]
           )

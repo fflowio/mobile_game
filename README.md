@@ -45,7 +45,6 @@ in my head, it goes a bit like this:
 | Folder / directory  | Book         |
 | File                | Chapter      |
 | Method / function   | Paragraph    |
-| ------------------- | ----------   |
 
 A method, also called a function, is generally related to a single thought or action, with several 
 methods in a file, and several files in a folder.
@@ -72,33 +71,42 @@ You'll find out more about them in the workshop.
 Run the project. There isn't much to see yet, that's because you will be coding it in the next steps.
 But let's just see the blank project first!
 
-### VSCode
+### 1A VSCode
+
+#### 1.1 Run the game (VSCode)
 
 TODO F5 instructions
 
-### Android Studio
+### 1B Android Studio
 
 In Android Studio, at the top of the screen, in the middle you'll see some menus. The look like this:
 
 ![img.png](img.png)
 
-1. Run the game
-   1.1 Select run options
-      1.1.1 Chrome(web) in the first menu
-      1.2.2 main.dart in the second menu 
+#### 1.1 Run the game (Android Studio)
 
-   1.2 Run
-       1.2.1 Click on the green triangle next to the third menu
+   Select run options
 
-   1.3 Check it's all working
+      Chrome(web) in the first menu
+      main.dart in the second menu 
+
+   Run
+
+       Click on the green triangle next to the third menu
+
+#### 1.2 Check it's all working
 
 You should see something like this:
 
-![img_1.png](img_1.png)
+![img_8.png](img_8.png)
 
-## Coding Context
+## A short explanation of the code provided
 
-At the top of game.dart, you'll see some imports, these are helpful functions you'll need later on.
+### Imports
+
+At the top of game.dart, you'll see some imports, these are helpers you'll need later on.
+
+### Classes
 
 Next come two classes:
 
@@ -109,20 +117,7 @@ and
 State is the way a mobile app remembers information between one click and the next. Without it,
 everything would always go back to the beginning and start again. 
 
-The second class, _GameState, has two methods:
-
-TODO signatures of game() method
-and
-```
-@override
-Widget build(BuildContext context) {
-```
-
-@override means there's code inherited from flutter that does things for you, for example the
-AppBar.
-
-All your code will be written in lib/views/game.dart. We will tell you which method to use to make your
-changes, or when it's a good idea to create a new method.
+### Methods
 
 To find a method, look for round brackets () and the squirly brackets {} like this:
 
@@ -136,27 +131,50 @@ The squirly brackets {} mark the beginning and end of the code that happens in t
 
 Most of your code will go inside a method, that is, between { and } for a method()
 
-Methods need to go inside a class, which also has { and }
+Methods must go inside a class, which also has { and }
+
+The second class, _GameState, has two methods,:
+
+```
+Widget welcome() {
+```
+
+and
+
+```
+@override
+Widget build(BuildContext context) {
+```
+
+@override means there's code inherited from flutter that does things for you, for example the
+AppBar.
+
+All your code will be written in this file, lib/views/game.dart. These instructions will tell you 
+where to make your changes.
 
 Let's get started.
 
-### Name
+## 2. First changes
 
-2. Choose a name
+### 2.1 Name
 
-Find this line in the build() method:
+Choose a name for your game.
+
+Find this line in the Game class. It's global, so it's not inside any method:
+
 ```
-title: const Text("My Game")
+  static var name = "My Game";
 ```
-  2.1 Change "My Game" to your chosen name for the game
+
+#### 2.1.1 Change "My Game" to your chosen name for the game
 
 As soon as you save, you should see the browser now shows your chosen name.
 
 Congratulations, you've just written your first line of code!
 
-### Background color
+### 2.2 Background color
 
-  2.2 Choose a background color for your game
+Choose a background color for your game
 
 Find this line in the game() method:
 
@@ -164,22 +182,21 @@ Find this line in the game() method:
 color: Colors.deepPurple,
 ```
 
-   2.2.1 Change Colors.deepPurple to Colors.green
-   2.2.2 Change it again, from Colors.green to Colors.deepOrange
+#### 2.2.1 Change Colors.deepPurple to Colors.green
+
+#### 2.2.2 Change it again, from Colors.green to Colors.deepOrange
 
 Did you notice anything while you were typing? Your IDE started helping you, by telling you what 
 colours it knows about.
 
 Try a few different colours.
 
-We're using dark mode for this app, which means it will have white text, so it's best to use a dark 
-background.
+This app is in dark mode, which means it has white text, so it's best to use a dark 
+background. It's a bit hard to see white on white!
 
-### Comments
+### 2.3 Comments
 
-  2.3 Comments
-
-    2.3.1 Comment out the color line, like this:
+#### 2.3.1 Comment out the color line, like this:
 
 ```
 // color: Colors.purple,
@@ -193,13 +210,15 @@ What happened when you commented the color line?
 Keep it commented for now, so that the page is plain black. We're about to start putting content on 
 the page, and a black background will work well. You'll have a chance to add colours back later on.
 
-## Welcome
-
-3. Welcome
+## 3. Welcome
 
 Let's start with a welcome page. 
 
-  3.1 Add this new method inside the _GameState class
+### 3.1 New welcome method
+
+#### 3.1.1 Add the new method
+
+Add this new method inside the _GameState class
 
 ```  
   Column welcome() {
@@ -218,6 +237,8 @@ method, you need to call it.
 
 It needs to be part of the contents of the Container in the game() method, and flutter does this
 with the child keyword, which you will use in the code below.
+
+### 3.2 Call the new method
 
 Look in the game() method, it returns a Container. 
 
