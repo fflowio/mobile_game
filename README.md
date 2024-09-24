@@ -1188,4 +1188,16 @@ Or would you build an app that does something useful?
 Here are some [other projects](https://www.geeksforgeeks.org/flutter-projects-with-source-code/) 
 that might give you ideas
 
+## 13 References
 
+### 13.1 Flutter
+
+The [flutter docs](https://docs.flutter.dev) are very helpful
+
+For example, there are lots of videos about [animations](https://docs.flutter.dev/ui/animations)
+
+And they have lots of great [sample code](https://github.com/flutter/samples)
+
+### 13.2 Flutter kids
+
+Check out the [flutter kids](https://www.youtube.com/watch?v=3qNmNyxnP9g) YouTube channel
