@@ -1203,3 +1203,8 @@ And they have lots of great [sample code](https://github.com/flutter/samples)
 ### 13.2 Flutter kids
 
 Check out the [flutter kids](https://www.youtube.com/watch?v=3qNmNyxnP9g) YouTube channel
+
+### 13.3 Storyset images
+
+Many thanks to the lovely people at [Storyset](https://storyset.com) for their inspiring images.
+And for making them free!
