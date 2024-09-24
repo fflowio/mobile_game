@@ -94,7 +94,7 @@ In Android Studio, at the top of the screen, in the middle you'll see some menus
 
 If you have configured an emulator, or connected a mobile phone, select it. 
 
-Otherwise, use the first option: Chrome (web), and you'll run this lab in a browser.
+Otherwise, use the first option: Chrome (web), and you'll run this workshop in a browser.
 
    Select run options
 
@@ -534,7 +534,15 @@ selectCard(String cardName) {
 Your IDE will give you a warning about using String interpolation. String interpolation syntax
 can be a bit fiddly, but luckily, we don't need to worry about the details!
 
-Hover over the String line, the IDE will offer a helpful message, like this:
+Hover over the String line, the IDE will offer a helpful message, like this (VSCode):
+
+![img_13.png](img_13.png)
+
+Click on 
+
+```Quick fix...```
+
+Or this (Android Studio):
 
 ![img_7.png](img_7.png)
 
@@ -546,7 +554,8 @@ Once it's fixed, it should look like this:
 
 ```debugPrint("Select card $cardName");```
 
-If the IDE magic doesn't work, you can fix it by hand.
+If the IDE magic doesn't work, you can fix it by hand: but often, it saves research and typing to
+use the IDE suggestions.
 
 ### 5.4 Does it work?
 
@@ -554,8 +563,8 @@ Click on the start button. Your app should look like this now!
 
 ![img_11.png](img_11.png)
 
-Remember, the image generator code is random, so your images will be different. But the layout 
-should be the same as this screenshot.
+The image generator code is random, so your images will be different. But the layout should be the 
+same as this screenshot.
 
 The images are all provided in the assets/images folder. Thanks and credits to https://storyset.com
 
@@ -583,9 +592,9 @@ List<String> _set3 = [];
 
 The images we're using come in sets of 4, so a set in the game will have a maximum size of 4.
 
-Let's start with the basics: if the set size is 0, the new card can go in it. If it's 4, the new
-card can't. If it has 1,2, or 3 cards, you need some more logic, which you'll add soon. For now,
-just add a debug statement.
+Let's start with the basics: if the set is empty, the new card can go in it. If it has reached 4, 
+and is full, the new card can't be added. If the set has 1,2, or 3 cards, you need some more logic, 
+which you'll add soon. For now, just add a debug statement as a reminder.
 
 Add a new cardCanGoInSet() method near the selectCard() method, that works out whether a set is 
 full or empty:
@@ -626,18 +635,24 @@ Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and sele
 
 In the selectCard() method, add this line:
 
-  ```addCardToNextAvailableSet(cardName);```
+```
+  addCardToNextAvailableSet(cardName);
+```
 
-This might be working now, but you can't really tell. You could add debugPrint to check, 
-or just skip on and start to display the sets. Then you'll find out pretty quickly what is
-and isn't working.
+This might be working now, but you can't really tell, because all the changes are in the sets,
+which are not visible. 
+
+You could add debugPrint to check the sets are being filled.
+
+Or, just skip on to the wallet, where you will display the set contents. Once the wallet is
+shown, you'll find out pretty quickly if the sets are working or not.
 
 ## 7. Wallet
 
 ### 7.1 Wallet contents
 
-The app currently shows cards in the left-hand side of the view. This means we can add the wallet 
-in the right-hand side.
+The app shows cards to choose from in the left-hand side of the view. This means we can add the 
+wallet in the right-hand side.
 
 Near the gamePage() method, add a new method that shows the set contents
 
@@ -662,16 +677,16 @@ Column wallet() {
 
 What's with all these commas?
 
-You're using commas quite a bit in this workshop, and here's a mini explanation.
+You'll see quite a lot of commas in this workshop, and here's a mini explanation.
 
 Many programming languages use square brackets to mark the beginning and end of a list, and most 
 of them call it an Array. 
 
-In flutter and dart it's called it a List. Like this:
+In flutter and dart it's called it a List. But it's the same thing. Like this:
 
 [a, b, c, d]
 
-When you want to add a new entry in the array, you add a comma to separate it from the entry before.
+When you want to add a new entry in the List, you add a comma to separate it from the entry before.
 Like this:
 
 [a, b, c, d, e]
@@ -681,8 +696,10 @@ If the contents are a bit longer, for example:
 [apple, banana, cherry, dinosaur]
 
 To help see where each entry starts, you can choose to split the contents over different lines. 
-This just makes it easier to see where each entry starts. It doesn't affect how the List works.
+This just makes it easier to see where each entry starts. It doesn't affect how the List (or Array)
+works.
 
+```
 [
   apple,
   banana,
@@ -690,16 +707,21 @@ This just makes it easier to see where each entry starts. It doesn't affect how 
   dinosaur,
   elephant
 ]
+```
 
-We use this style for the code in this workshop! Let's add a comma and element.
+We mostly use this style for the code in this workshop! Let's add a comma and element.
+
+In the gamePage() method, the Column has a List of children, shown by [ and ].
 
 Add a comma after cardsToChoose(), and then this line:
 
-```wallet()```
-
-Click on a card
+```
+  wallet()
+```
 
 ### 7.3 Is it working?
+
+In the chrome browser, click Start, then click on one of the cards on the left.
 
 The wallet code is working, you can see it shows grey boxes where the cards will be added, so it's
 getting called. But it's not displaying the cards from the set contents. Why not?
@@ -725,7 +747,9 @@ Now the wallet updates with the cards from the set! It should look something lik
 ![img_4.png](img_4.png)
 
 It's working, but, because we only added logic to add the first card to any set, they only 
-ever have one. Go back to the set logic to add cards 2, 3, and 4
+ever have one. 
+
+Next, you'll revisit the set logic to add cards 2, 3, and 4
 
 ## 8 More set logic
 
@@ -762,7 +786,9 @@ To understand how this method works in more detail, add debug. For example:
 ### 8.3 Call the card category match
 
 In the cardCanGoInSet() method, add an 'else if' statement, which uses the categoryMatch() test to 
-find out if this card fits int he set. The whole method ends up like this:
+find out if this card fits in the set. 
+
+Once you've added the new 'else if', the whole method contents look like this:
 
 ```
   if (set.length == 4) {
@@ -800,35 +826,49 @@ Instead, first, we'll make a minor refactor and keep track of all the sets toget
 
 #### 9.1.1 List of Lists
 
-When you have a list, captured between square brackets: [a, b, c]
+When you have a List, captured between square brackets: 
 
-It turns out, you can use a list inside a list, like this: [[a,b,c], [b,c,d], [f,g,h]]
+[a, b, c]
 
-We're going to do this with our sets.
+It turns out, you can use a List inside a List, like this: 
 
-### 9.1.2 Add a sets list
+[[a,b,c], [b,c,d], [f,g,h]]
+
+We're going to do this with the card sets.
+
+#### 9.1.2 Add a sets list
 
 At the top of the GameState class, add a new sets list near the other sets 
 
-```List<List<String>> _sets = [];```
+```
+  List<List<String>> _sets = [];
+```
 
 You can try changing the line you just added:
 
-```List<List<String>> _sets = [_set1, _set2, _set3];```
+```
+  List<List<String>> _sets = [_set1, _set2, _set3];
+```
 
 ... but you'll get errors! The instance member can't be accessed in an initializer
 
 Basically, it just means it's too soon to add those contents.
 
-Back up to the first attempt:
+#### 9.1.5 Undo
+
+Press Ctrl and Z at the same time (windows) or Cmd and Z (mac). What happens?
+
+Ctrl-Z (Cmd-Z) is a really useful way to undo something if you make a mistake or change your mind.
+
+Back up the code to the first version:
 
 ```List<List<String>> _sets = [];```
 
-### 9.1.3 Add the sets to the bigger list.
+#### 9.1.6 Add the sets to the bigger list.
 
 Instead, set up the sets when we reset the game
 
-Add this content into resetGame():
+Add this content into resetGame(), near _showContents, and before setState():
 
 ```
   _set1 = [];
@@ -837,7 +877,7 @@ Add this content into resetGame():
   _sets = [_set1, _set2, _set3];
 ```
 
-## 9.2 For loop
+### 9.2 For loop
 
 In the addCardToNextAvailableSet() method, now we can use a for loop instead of checking each set 
 separately.
@@ -855,15 +895,24 @@ Change the contents of the method to this:
 
 #### 9.2.1 Does it work?
 
-With any refactor, even a minor one, check everything still works the same way it did before.
+The idea behind a refactor is that the code ends up neater, but the function still works exactly
+how it did before.
+
+So it's important to check everything still works before you move on - including old bugs. But
+you should not have added any new bugs!
+
+Check that you can still play the game and add cards to the wallet. The game still runs forever,
+you haven't fixed that yet. You'll do that next!
 
 ### 9.3 Track full sets
 
-Next, keep track of when the sets are full.
+Keep track of when the sets are full.
 
 Near the _set variables at the top of the class, add a new private fullSets variable
 
-```int _fullSets = 0;```
+```
+  int _fullSets = 0;
+```
 
 In the addCardToNextAvailableSet() method, if you just added the 4th card, update the full set count
 
@@ -893,7 +942,7 @@ When the game resets, also set _fullSets back to zero. Add this line in resetGam
 
 ```_fullSets = 0;```
 
-##== 9.3.3 Does it work?
+#### 9.3.3 Does it work?
 
 Sort of.
 
@@ -942,13 +991,13 @@ You'll see an interpolation warning about the line that starts 'String result'
 
 Do you remember using the IDE to help fix the interpolation warning?
 
-Use the same trick again, and your code should change to this:
+Use the same trick again, and your code changes to this:
 
 ```String result = "You completed $_fullSets sets!";```
 
 ### 9.5 Call the finish page
 
-In the pageContents() method, between the top if and the bottom else, add an 'else if' test, and set
+In the pageContents() method, between the top 'if' and the bottom 'else', add an 'else if' test, and set
 it to call finishPage. You should end up with the whole method looking like this:
 
 ```
@@ -967,7 +1016,8 @@ Run the game through, do you get to the new finish page?
 
 Excellent!
 
-But at the moment, every player will win, every time.
+But at the moment, every player will fill all three sets, every time. It's nice to win, but
+if everyone always wins, it's not much of a game.
 
 Let's fix that next.
 
@@ -983,19 +1033,25 @@ Let's make it more intelligent.
 
 At the top of the class, where we declare _sets and _fullSets, add a line with the coins variable
 
-```int _coins = 120;```
+```
+int _coins = 120;
+```
 
 ### Reset coins
 
 When the game starts, reset the coins value. In resetGame(), add this line:
 
-```_coins = 120;```
+```
+   _coins = 120;
+```
 
 #### 10.1.2 Update coins
 
 Every time the user selects a card, subtract some coins. In the selectCard() method, add this:
 
-```_coins -= 10;```
+```
+   _coins -= 10;
+```
 
 #### 10.1.3 Check when the user runs out of coins
 
@@ -1004,9 +1060,9 @@ Better check in case we got to zero!
 In the same selectCard() method, after subtracting coins, test how many are left:
 
 ```
-  if (_coins == 0) {
-    _showContents = "finish";
-  }
+    if (_coins == 0) {
+      _showContents = "finish";
+    }
 ```
 
 #### 10.1.4 Remove the old fullSets check
@@ -1017,30 +1073,34 @@ to break, and it can confuse someone reading this code for the first time.
 
 Delete these lines:
 
-``` 
-  ~~
+~~
+  ```
     if (_fullSets == 3) {
       _showContents = "finish";
     }
-  ~~  
-```
+  ```
+~~
 
 #### 10.1.5 Display coins
 
 Show the user how their coins are going: in the build() method at the end of the class, find
-where the customAppBar is called, and update it to send the coins, it should end up like this:
+where the customAppBar is called, and update it to send the coins instead of the number 40.
+ 
+It should end up like this:
 
 ```Widgets.customAppBar(Game.name, _coins),```
 
 ### 10.2 Does it work?
 
-It should all look something like this:
+Play the game.
+
+It should look something like this:
 
 ![img_12.png](img_12.png)
 
-Make sure that when you get to the end, you can restart the game.
+Make sure that when you get to the end, you restart the game, and the coins go back to 120.
 
-Congratulations!! You have completed the lab.
+Congratulations!! You have completed the workshop.
 
 # Stretch goals
 
@@ -1106,7 +1166,7 @@ Here's my solution:
   }
 ```
 
-It works, but it feels inefficient. 
+It works, but having so may 'else if' tests feels inefficient. Your solution might be more elegant.
 
 ### 11.3 Does it work?
 
