@@ -242,7 +242,8 @@ Inside the welcome() method, where the Column is, add children in side the retur
 
 When you've done it, the whole method looks like this:
 
-``` Column welcome() {
+``` 
+  Column welcome() {
     return Column(
       children: [
         const SizedBox(height: 50),
@@ -250,7 +251,8 @@ When you've done it, the whole method looks like this:
         const SizedBox(height: 50)
       ]
     );
-  } ```
+  } 
+```
 
 And in a browser, the result looks like this:
 
@@ -299,9 +301,9 @@ When these instructions say "near", you can add the new code either above or bel
 Add this new method near the welcome() method.
 
 ```
-void resetGame() async {
-  debugPrint("Reset");
-}
+  void resetGame() async {
+    debugPrint("Reset");
+  }
 ```
 This fixes the error, and you have a green Start button now! What happens when you press it?
 
@@ -360,16 +362,16 @@ if they are bright red. This workshop shows you some on purpose so that you get 
 Add a gamePage method near the pageContents and welcome methods, like this:
 
 ```
-Row gamePage() {
-  debugPrint("Game");
+  Row gamePage() {
+    debugPrint("Game");
   
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text("Game contents go here")    
-    ]
-  );
-}
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text("Game contents go here")    
+      ]
+    );
+  }
 ```
 
 This should fix one of the errors, but there's still one more.
@@ -487,12 +489,12 @@ The game invites the user to pick a card. So let's give them some cards to choos
 
 In the gamePage() method, delete the Text line:
 
-~~```Text("Game contents go here")```~~
+<del>Text("Game contents go here")</del>
 
 change the Text line to call cardsToChoose()
 
 ```
-cardsToChoose()
+  cardsToChoose()
 ```
 
 #### 5.1.2 Add cardsToChoose method
