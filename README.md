@@ -190,9 +190,11 @@ Find this line in the build() method:
 color: Colors.deepPurple,
 ```
 
-#### 2.2.1 Change Colors.deepPurple to Colors.green
+#### 2.2.1 Try different colors
 
-#### 2.2.2 Change it again, from Colors.green to Colors.deepOrange
+Change Colors.deepPurple to Colors.green
+
+Change it again, from Colors.green to Colors.deepOrange
 
 Did you notice anything while you were typing? Your IDE started helping you, by telling you what 
 colours it knows about.
@@ -200,50 +202,57 @@ colours it knows about.
 Try a few different colours.
 
 This app is in dark mode, which means it has white text, so it's best to use a dark 
-background. It's impossible to see white text on a white background.
+background. It's impossible to see white text on a white background!
 
 ### 2.3 Comments
 
-#### 2.3.1 Comment out the color line, like this:
+#### 2.3.1 Comment out the color line
+
+Use // to comment out the color line, it will end up like this:
 
 ```
 // color: Colors.purple,
 ```
 
-All programming languages have a way of writing comments, usually so that you can explain what's
-happening to other developers. Comments are also useful to remove some code temporarily.
-
 What happened when you commented the color line?
 
-Turn it back to purple or your favourite colour.
+All programming languages have a way of writing comments, usually so that you can explain what's
+happening to other developers. Comments are also useful to remove code temporarily, like you just did.
+
+Remove the comment marker (//), and turn it back to purple or your preferred dark colour.
 
 ## 3. Welcome
 
-Edit the welcome method to show a welcome page
-
 ### 3.1 welcome method
 
-#### 3.1.1 Remove the old welcome contents
+Edit the welcome method to show a welcome page
 
-Delete this line:
+#### 3.1.1 Add the new welcome contents
 
-```~~return Container();~~```
-
-#### 3.1.2 Add the new welcome contents
-
-Inside the welcome() method, where the Container used to be, add this code:
+Inside the welcome() method, where the Column is, add children in side the return Column, between
+( and ):
 
 ```  
-  return Column(
     children: [
       const SizedBox(height: 50),
       ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
       const SizedBox(height: 50)
     ]
-  );
 ```
 
-The result should look like this!
+When you've done it, the whole method looks like this:
+
+``` Column welcome() {
+    return Column(
+      children: [
+        const SizedBox(height: 50),
+        ImageHelpers.getPicture("assets/images/StoryboardAmico.svg", 300),
+        const SizedBox(height: 50)
+      ]
+    );
+  } ```
+
+And in a browser, the result looks like this:
 
 ![img_9.png](img_9.png)
 
@@ -266,7 +275,9 @@ like this:
 
 Below the comma, add this line:
 
-```Widgets.defaultButton(resetGame, "Start")```
+```
+Widgets.defaultButton(resetGame, "Start")
+```
 
 Your IDE will show up with an error immediately! Why? What have you done?
 
@@ -298,14 +309,14 @@ This fixes the error, and you have a green Start button now! What happens when y
 
 Look at the foot of your screen, in the console. 
 
+In VSCode, select the Debug Console tab
+
 In Android Studio, select the Run tab
 
-(TODO VS Code)
+The method doesn't do anything yet - but you can tell if it's working, because in the Run console, 
+you see the word Reset.
 
-The method doesn't do anything yet - but you know it's working, because in the Run console, you 
-see the word Reset.
-
-That's because you added a line of debug, using the flutter method debugPrint(). 
+This is because you added a line of debug, using the flutter method debugPrint(). 
 
 Developers use debug to work out what's going on in their code, and what's going wrong. Typically,
 you turn off debug statements when you get into production. But at the moment, you're the only 
@@ -380,7 +391,9 @@ see them quickly.
 
 At the top of the (private) _GameState class, above all the methods, add this line:
 
-```String _showContents = "welcome";```
+```
+String _showContents = "welcome";
+```
 
 All the errors should be fixed, but there are still warnings. Ignore them for now, you will fix
 them soon.
@@ -392,34 +405,38 @@ like this:
 
 ```child: pageContents()```
 
-The page contents don't actually change yet, because you haven't change the value of _showContents.
-Do this next.
+If you test by clicking the Start button, you'll notice that the page contents don't actually change.
+ 
+That's because there isn't any code to change the value of _showContents, so it is always "welcome".
+
+Move on to the next step to fix this.
 
 ### 4.6 _showContents logic
 
 You have code for two different bits of content: gamePage() and welcome(). But at the moment,
-you can still only see the welcome page. Which is nice, but it would be handy to see the game
-page too.
+you can still only see the welcome page. Iit would be handy to see the game page too.
 
 How do you fix this? 
 
-First, let's try changing the value of _showContents
+First, try changing the value of _showContents
 
 #### 4.6.1 Change _showContents 
 
 In the resetGame() method, add this line at the bottom:
 
-```_showContents = "start";```
+```
+  _showContents = "start";
+```
 
-But... still nothing happens!
+But... still nothing changes when you press the Start button!
 
 What has gone wrong?
 
-Remember the debugPrint? It's still there, and it shows you did call the resetGame() method,
+Remember the debugPrint message? It's still there, and it shows you did call the resetGame() method,
 each time you click the start button. (It's a good idea to check this, sometimes the
 reason code isn't working is simply that you are not calling it.)
 
-But debug shows you did call it, and there must be a different problem. 
+But debug shows you did call it, so there must be a different problem. 
 
 ### 4.6.2 Set _showContents in state
 
@@ -428,7 +445,9 @@ contents. In flutter, the way to get the page to redraw is to change the state.
 
 At the end of resetGame(), add a call to set the state:
 
-``` setState(() {  });```
+``` 
+  setState(() {  });
+```
 
 ## 4.7 Does it work?
 
@@ -468,11 +487,13 @@ The game invites the user to pick a card. So let's give them some cards to choos
 
 In the gamePage() method, delete the Text line:
 
-```~~Text("Game contents go here")~~```
+~~```Text("Game contents go here")```~~
 
 change the Text line to call cardsToChoose()
 
-    ```cardsToChoose()```
+```
+cardsToChoose()
+```
 
 #### 5.1.2 Add cardsToChoose method
 
