@@ -165,9 +165,25 @@ Open your chosen IDE, one of:
 - Android Studio
 - Intellij
 
-Load the mobile-game repository into it. Open up lib/views/game.dart.
+Load the mobile-game repository into it. 
 
-If you're planning this for students, we recommend you delete lib/views/solution.dart.
+### IDE Warning
+
+You will be asked if you trust the authors of the files in this folder. Outside the IDE, for example
+in notepad, make sure the files are the ones you are expecting. Two sensible checks:
+
+- the text in the README looks familiar (it should be this file)
+- most of the files are images (.png, .svg) or dart files (.dart)
+
+Once you're happy it's what you expect, click 'Yes, I trust the authors'
+
+### Remove the solution (optional)
+
+If you're setting up a workspace for students, we recommend you delete lib/views/solution.dart.
+
+### Open the working file 
+
+Open up lib/views/game.dart.
 
 # Phew!
 
