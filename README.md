@@ -242,7 +242,8 @@ Inside the welcome() method, where the Column is, add children in side the retur
 
 When you've done it, the whole method looks like this:
 
-``` Column welcome() {
+``` 
+  Column welcome() {
     return Column(
       children: [
         const SizedBox(height: 50),
@@ -250,7 +251,8 @@ When you've done it, the whole method looks like this:
         const SizedBox(height: 50)
       ]
     );
-  } ```
+  } 
+```
 
 And in a browser, the result looks like this:
 
@@ -299,9 +301,9 @@ When these instructions say "near", you can add the new code either above or bel
 Add this new method near the welcome() method.
 
 ```
-void resetGame() async {
-  debugPrint("Reset");
-}
+  void resetGame() async {
+    debugPrint("Reset");
+  }
 ```
 This fixes the error, and you have a green Start button now! What happens when you press it?
 
@@ -326,14 +328,14 @@ and what isn't.
 Any time something doesn't work, add your own debugPrint output, and see if you can work
 out what's happening!
 
-## 4.2 Start the game
+### 4.2 Start the game
 
 Time to get the game started!
 
 At the moment, the game always shows welcome page. Let's change it to return a 
 game page when the user starts playing.
 
-### 4.2.1 Add pageContents() 
+#### 4.2.1 Add pageContents() 
 
 Add a new method:
 
@@ -360,16 +362,16 @@ if they are bright red. This workshop shows you some on purpose so that you get 
 Add a gamePage method near the pageContents and welcome methods, like this:
 
 ```
-Row gamePage() {
-  debugPrint("Game");
+  Row gamePage() {
+    debugPrint("Game");
   
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text("Game contents go here")    
-    ]
-  );
-}
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text("Game contents go here")    
+      ]
+    );
+  }
 ```
 
 This should fix one of the errors, but there's still one more.
@@ -438,7 +440,7 @@ reason code isn't working is simply that you are not calling it.)
 
 But debug shows you did call it, so there must be a different problem. 
 
-### 4.6.2 Set _showContents in state
+#### 4.6.2 Set _showContents in state
 
 You don't only want to the change the value of _showContents, you also want to redraw the page 
 contents. In flutter, the way to get the page to redraw is to change the state. 
@@ -449,7 +451,7 @@ At the end of resetGame(), add a call to set the state:
   setState(() {  });
 ```
 
-## 4.7 Does it work?
+### 4.7 Does it work?
 
 Click the Start button again. Now it should work, and you see the "Game contents go here" text.
 Like this:
@@ -487,12 +489,12 @@ The game invites the user to pick a card. So let's give them some cards to choos
 
 In the gamePage() method, delete the Text line:
 
-~~```Text("Game contents go here")```~~
+<del>Text("Game contents go here")</del>
 
 change the Text line to call cardsToChoose()
 
 ```
-cardsToChoose()
+  cardsToChoose()
 ```
 
 #### 5.1.2 Add cardsToChoose method
@@ -588,7 +590,7 @@ List<String> _set2 = [];
 List<String> _set3 = [];
 ```
 
-## 6.2 Initial set logic
+### 6.2 Initial set logic
 
 The images we're using come in sets of 4, so a set in the game will have a maximum size of 4.
 
@@ -612,7 +614,7 @@ bool cardCanGoInSet(String cardName, List<String> set) {
 }  
 ```
 
-## 6.3 More set logic
+### 6.3 More set logic
 
 Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and selectCard() methods.
 
@@ -631,7 +633,7 @@ Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and sele
   }
 ```
 
-## 6.4 Call the new logic
+### 6.4 Call the new logic
 
 In the selectCard() method, add this line:
 
@@ -1073,13 +1075,13 @@ to break, and it can confuse someone reading this code for the first time.
 
 Delete these lines:
 
-~~
+<del>
   ```
     if (_fullSets == 3) {
       _showContents = "finish";
     }
   ```
-~~
+</del>
 
 #### 10.1.5 Display coins
 
@@ -1201,3 +1203,8 @@ And they have lots of great [sample code](https://github.com/flutter/samples)
 ### 13.2 Flutter kids
 
 Check out the [flutter kids](https://www.youtube.com/watch?v=3qNmNyxnP9g) YouTube channel
+
+### 13.3 Storyset images
+
+Many thanks to the lovely people at [Storyset](https://storyset.com) for their inspiring images.
+And for making them free!
