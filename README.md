@@ -75,7 +75,14 @@ But let's just see the blank project first!
 
 #### 1.1 Run the game (VSCode)
 
-TODO F5 instructions
+With your IDE open, press F5. 
+
+If nothing happens, go to the menus at the top of VSCode and select Run -> Start Debugging
+
+You will be asked to choose where to run:
+
+- If you have configured an emulator or connected a mobile phone, choose it
+- Otherwise, choose Chrome
 
 ### 1B Android Studio
 
@@ -85,10 +92,9 @@ In Android Studio, at the top of the screen, in the middle you'll see some menus
 
 #### 1.1 Run the game (Android Studio)
 
-If you have an emulator device, or have connected a physical device, use them. 
+If you have configured an emulator, or connected a mobile phone, select it. 
 
-If you don't have either of these, use the first option: Chrome (web), and you'll run this lab
-in a browser.
+Otherwise, use the first option: Chrome (web), and you'll run this lab in a browser.
 
    Select run options
 

@@ -31,6 +31,7 @@ class _GameState extends State<Game> {
               Widgets.customAppBar(Game.name, 40),
               Container(
                 color: Colors.deepPurple,
+                width: double.infinity,
                 constraints: const BoxConstraints(maxHeight: 580),
                 child: welcome()
               )
