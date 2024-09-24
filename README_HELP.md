@@ -89,6 +89,12 @@ Drop a comment in the discussion area that says:
 We've opened [polls](https://github.com/fflowio/mobile_game/discussions/categories/polls) for
 these in the discussion section, to make it quick to respond!
 
+### Animations
+
+I'd love to add a stretch goal that creates animations on the finish page to celebrate. Can you 
+help with this? Can it be done without an animation controller? Or can you explain an animation 
+controller in a straightforward way?
+
 ## Setup
 
 We plan to run this workshop in person, where the students will have machines already set up with
