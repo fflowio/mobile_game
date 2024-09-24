@@ -16,7 +16,6 @@ class Game extends StatefulWidget {
 class _GameState extends State<Game> {
   Column welcome() {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start
     );
   }
 
