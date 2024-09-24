@@ -328,14 +328,14 @@ and what isn't.
 Any time something doesn't work, add your own debugPrint output, and see if you can work
 out what's happening!
 
-## 4.2 Start the game
+### 4.2 Start the game
 
 Time to get the game started!
 
 At the moment, the game always shows welcome page. Let's change it to return a 
 game page when the user starts playing.
 
-### 4.2.1 Add pageContents() 
+#### 4.2.1 Add pageContents() 
 
 Add a new method:
 
@@ -440,7 +440,7 @@ reason code isn't working is simply that you are not calling it.)
 
 But debug shows you did call it, so there must be a different problem. 
 
-### 4.6.2 Set _showContents in state
+#### 4.6.2 Set _showContents in state
 
 You don't only want to the change the value of _showContents, you also want to redraw the page 
 contents. In flutter, the way to get the page to redraw is to change the state. 
@@ -451,7 +451,7 @@ At the end of resetGame(), add a call to set the state:
   setState(() {  });
 ```
 
-## 4.7 Does it work?
+### 4.7 Does it work?
 
 Click the Start button again. Now it should work, and you see the "Game contents go here" text.
 Like this:
@@ -590,7 +590,7 @@ List<String> _set2 = [];
 List<String> _set3 = [];
 ```
 
-## 6.2 Initial set logic
+### 6.2 Initial set logic
 
 The images we're using come in sets of 4, so a set in the game will have a maximum size of 4.
 
@@ -614,7 +614,7 @@ bool cardCanGoInSet(String cardName, List<String> set) {
 }  
 ```
 
-## 6.3 More set logic
+### 6.3 More set logic
 
 Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and selectCard() methods.
 
@@ -633,7 +633,7 @@ Add a new method addCardToNextAvailableSet(), near the cardCanGoInSet() and sele
   }
 ```
 
-## 6.4 Call the new logic
+### 6.4 Call the new logic
 
 In the selectCard() method, add this line:
 
@@ -1075,13 +1075,13 @@ to break, and it can confuse someone reading this code for the first time.
 
 Delete these lines:
 
-~~
+<del>
   ```
     if (_fullSets == 3) {
       _showContents = "finish";
     }
   ```
-~~
+</del>
 
 #### 10.1.5 Display coins
 
