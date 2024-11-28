@@ -21,7 +21,7 @@ class _GameState extends State<Game> {
   List<List<String>> _sets = [];
   int _fullSets = 0;
   int _coins = 120;
-  
+
   Widget finishPage() {
     String result = "You completed $_fullSets sets!";
 
