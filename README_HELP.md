@@ -42,7 +42,7 @@ The layout was chosen somewhat randomly.
 ## Workshop instructions
 
 If you have time, please run through the
-[workshop instructions in the README](https://github.com/fflowio/mobile_game/)
+[workshop instructions](https://docs.google.com/document/d/1BsqEwFJYC2MtD4iQsAp1l_oDG3-OkwKoXOq7u9bFDAk/edit?usp=sharing)
 
 Then let us know what you think! There are suggestions here for the kind of help we're looking
 for.
@@ -72,8 +72,8 @@ Is there anything that needs to change with this in mind?
 This workshop is aimed at complete beginners. We're expecting some teenagers may have experience
 with [scratch](https://scratch.mit.edu), but we don't assume it.
 
-You're still welcome if you know more about coding in general, or about flutter specifically, but
-you might find it slightly slow-paced. We'd still love your feedback!
+You're still welcome if you know more about coding in general, or about flutter specifically. 
+We'd still love your feedback!
 
 Given that it's for beginners, would you change the pace or some of the explanations?
 
@@ -109,6 +109,11 @@ At the moment, self-study users are going to get stuck on
 Do you have any instructions that you think are beginner-friendly? Especially for windows?
 
 ## How to send your feedback
+
+### Comment on the workshop instructions
+
+The instructions are hosted in Google Drive, and you should have permissions to leave comments. 
+[workshop instructions] https://docs.google.com/document/d/1BsqEwFJYC2MtD4iQsAp1l_oDG3-OkwKoXOq7u9bFDAk/edit?usp=sharing
 
 ### Email
 
